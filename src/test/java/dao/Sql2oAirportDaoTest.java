@@ -73,6 +73,13 @@ public class Sql2oAirportDaoTest {
         airportDao.deleteById(testAirport.getId());
         assertEquals(1, airportDao.getAll().size());
     }
+    @Test
+    public void clearAll() throws Exception {
+        Airport testAirport = setupAirport();
+        Airport otherAirport = setupAirport();
+        airportDao.clearAll();
+        assertEquals(0, airportDao.getAll().size());
+    }
 
     //HELPER METHODS
     public Airport setupAirport (){
