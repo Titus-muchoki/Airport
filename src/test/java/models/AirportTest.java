@@ -21,6 +21,16 @@ public class AirportTest {
         Airport airport = setupAirport();
         assertNotEquals("Joy", airport.getName());
     }
+    @Test
+    public void getCodeReturnsCorrectCode() throws Exception{
+        Airport airport = setupAirport();
+        assertEquals("214", airport.getCode());
+    }
+    @Test
+    public void getCityReturnsCorrectCity() throws Exception{
+        Airport airport = setupAirport();
+        assertEquals("nairobi", airport.getCity());
+    }
     public Airport setupAirport (){
         return new Airport("JKIA", "214", "nairobi", "12");
     }
