@@ -53,6 +53,14 @@ public class Airport {
         this.city = city;
     }
 
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
     public int getId() {
         return id;
     }

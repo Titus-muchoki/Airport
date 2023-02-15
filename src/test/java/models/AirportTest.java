@@ -31,6 +31,36 @@ public class AirportTest {
         Airport airport = setupAirport();
         assertEquals("nairobi", airport.getCity());
     }
+    @Test
+    public void getDistanceShowsCorrectDistance() throws Exception{
+        Airport airport = setupAirport();
+        assertEquals("12", airport.getDistance());
+    }
+    @Test
+    public void setNameSetsNameCorrectly(){
+        Airport airport = setupAirport();
+        airport.setName("wilson");
+        assertEquals("wilson", airport.getName());
+    }
+
+    @Test
+    public void setCodeSetsCodeCorrectly(){
+        Airport airport = setupAirport();
+        airport.setCode("123");
+        assertNotEquals("233", airport.getCode());
+    }
+    @Test
+    public void setCitySetsTheCityCorrectly(){
+        Airport airport = setupAirport();
+        airport.setCity("kisumu");
+        assertNotEquals("nakuru", airport.getCity());
+    }
+    @Test
+    public void setDistanceSetsTheCorrectDistance(){
+        Airport airport = setupAirport();
+        airport.setDistance("45");
+        assertEquals("45", airport.getDistance());
+    }
     public Airport setupAirport (){
         return new Airport("JKIA", "214", "nairobi", "12");
     }
