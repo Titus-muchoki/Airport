@@ -34,4 +34,5 @@ public class Feature {
     public int hashCode() {
         return Objects.hash(widthRunWay, lengthRunWay, strengthRunWay, id, airportId, createdat, formattedCreatedAt);
     }
+
 }
