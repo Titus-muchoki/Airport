@@ -1,10 +1,14 @@
 package dao;
 
+import models.Airport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+
+import static org.junit.Assert.assertEquals;
 
 public class Sql2oAirportDaoTest {
     private static Connection conn;
@@ -29,5 +33,26 @@ public class Sql2oAirportDaoTest {
     public static void shutDown() throws Exception{ //changed to static
         conn.close(); // close connection once after this entire test file is finished
         System.out.println("connection closed");
+    }
+    @Test
+    public void addingAirportSetsId() throws Exception {
+        Airport testAirport = setupAirport();
+        assertEquals(0, testAirport.getId());
+    }
+    @Test
+    public void addedAirportsAreReturnedFromGetAll() throws Exception {
+        Airport testAirport = setupAirport();
+        assertEquals(1, airportDao.getAll().size());
+    }
+    @Test
+    public void noAirportsReturnsEmptyList() throws Exception {
+        assertEquals(0, airportDao.getAll().size());
+    }
+
+    //HELPER METHODS
+    public Airport setupAirport (){
+        Airport airport = new Airport("JKIA", "214", "nairobi", "12");
+        airportDao.add(airport);
+        return airport;
     }
 }
