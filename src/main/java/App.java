@@ -75,6 +75,17 @@ public class App {
             return gson.toJson(allFeatures);
         });
 
+        //CREATE
+        post("/features/new", "application/json", (req, res) -> {
+            if (req.body().isEmpty()){
+                return gson.toJson("error:payload cannot be null");
+            }
+            Feature feature = gson.fromJson(req.body(), Feature.class);
+            featureDao.add(feature);
+            res.status(201);;
+            return gson.toJson(feature);
+        });
+
 
         //FILTERS
 
