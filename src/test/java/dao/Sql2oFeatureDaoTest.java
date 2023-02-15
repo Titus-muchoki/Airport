@@ -59,6 +59,22 @@ public class Sql2oFeatureDaoTest {
         Feature featureForOtherAirport = setupFeatureForAirport(otherAirport);
         assertNotEquals(2, featureDao.getAllFeaturesByAirport(testAirport.getId()).size());
     }
+    @Test
+    public void deleteById() throws Exception {
+        Feature testFeature = setupFeature();
+        Feature otherFeature = setupFeature();
+        featureDao.deleteById(testFeature.getId());
+        assertEquals(0, featureDao.getAll().size());
+        assertEquals(0, featureDao.getAll().size());
+    }
+    @Test
+    public void clearAll() throws Exception {
+        Feature testFeature = setupFeature();
+        Feature otherFeature = setupFeature();
+        featureDao.clearAll();
+        assertEquals(0, featureDao.getAll().size());
+    }
+
 
 
 
