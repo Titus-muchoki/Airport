@@ -1,5 +1,8 @@
 package dao;
 
+import models.Airport;
+import models.Feature;
+import models.Review;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,5 +34,18 @@ public class Sql2oFeatureDaoTest {
     public static void shutDown() throws Exception{ //changed to static
         conn.close(); // close connection once after this entire test file is finished
         System.out.println("connection closed");
+    }
+    //helpers
+
+    public Feature setupFeature() {
+        Feature feature = new Feature("20", "20", "40", 1);
+        featureDao.add(feature);
+        return feature;
+    }
+
+    public Feature setupFeatureForAirport(Airport airport) {
+        Feature feature = new Feature("20", "20", "40", airport.getId());
+        airportDao.add(airport);
+        return feature;
     }
 }
