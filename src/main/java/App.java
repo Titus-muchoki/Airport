@@ -85,6 +85,16 @@ public class App {
             res.status(201);;
             return gson.toJson(feature);
         });
+        post("/airports/:airportId/features/new", "application/json", (req, res) ->{
+            int airportId = Integer.parseInt(req.params("airportId"));
+            Feature feature = gson.fromJson(req.body(), Feature.class);
+            feature.setCreatedat(); //I am new!
+            feature.setFormattedCreatedAt();
+            feature.setAirportId(airportId);
+            featureDao.add(feature);
+            res.status(201);
+            return gson.toJson(feature);
+        });
 
 
         //FILTERS

@@ -82,7 +82,7 @@ public class Feature {
         return createdat;
     }
 
-    public void setCreatedat(long createdat) {
+    public void setCreatedat() {
         this.createdat = createdat;
     }
     public String getFormattedCreatedAt(){
