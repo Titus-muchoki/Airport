@@ -74,6 +74,20 @@ public class Sql2oFeatureDaoTest {
         featureDao.clearAll();
         assertEquals(0, featureDao.getAll().size());
     }
+    @Test
+    public void timeStampIsReturnedCorrectly() throws Exception {
+        Airport testAirport = setupAirport();
+        airportDao.add(testAirport);
+        Feature testFeature = new Feature("20", "20","40", testAirport.getId());
+        featureDao.add(testFeature);
+
+        long creationTime = testFeature.getCreatedat();
+        long savedTime = featureDao.getAll().get(0).getCreatedat();
+        String formattedCreationTime = testFeature.getFormattedCreatedAt();
+        String formattedSavedTime = featureDao.getAll().get(0).getFormattedCreatedAt();
+        assertEquals(formattedCreationTime,formattedSavedTime);
+        assertEquals(creationTime, savedTime);
+    }
 
 
 

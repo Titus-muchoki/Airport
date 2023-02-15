@@ -1,5 +1,7 @@
 package models;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Feature {
@@ -19,7 +21,7 @@ public class Feature {
         this.strengthRunWay = strengthRunWay;
         this.airportId = airportId;
         this.createdat = System.currentTimeMillis();
-//        setFormattedCreatedAt(); //we'll make me in a minute
+        setFormattedCreatedAt(); //we'll make me in a minute
     }
 
     @Override
@@ -74,4 +76,38 @@ public class Feature {
     public void setId(int id) {
         this.id = id;
     }
+
+    public long getCreatedat() {
+        return createdat;
+    }
+
+    public void setCreatedat(long createdat) {
+        this.createdat = createdat;
+    }
+    public String getFormattedCreatedAt(){
+        Date date = new Date(createdat);
+        String datePatternToUse = "MM/dd/yyyy @ K:mm a"; //see https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+        SimpleDateFormat sdf = new SimpleDateFormat(datePatternToUse);
+        return sdf.format(date);
+    }
+    public void setFormattedCreatedAt(){
+        Date date = new Date(createdat);
+        String datePatternToUse = "MM/dd/yyyy @ K:mm a";
+        SimpleDateFormat sdf = new SimpleDateFormat(datePatternToUse);
+        this.formattedCreatedAt = sdf.format(date);
+        System.out.println(this.formattedCreatedAt);
+    }
+//    @Override
+//    public int compareTo(Feature featureObject) {
+//        if (this.createdat < featureObject.createdat)
+//        {
+//            return -1; //this object was made earlier than the second object.
+//        }
+//        else if (this.createdat > featureObject.createdat){ //this object was made later than the second object
+//            return 1;
+//        }
+//        else {
+//            return 0; //they were made at the same time, which is very unlikely, but mathematically not impossible.
+//        }
+//    }
 }
