@@ -19,7 +19,7 @@ public class Feature {
         this.strengthRunWay = strengthRunWay;
         this.airportId = airportId;
         this.createdat = System.currentTimeMillis();
-        setFormattedCreatedAt(); //we'll make me in a minute
+//        setFormattedCreatedAt(); //we'll make me in a minute
     }
 
     @Override
@@ -35,4 +35,11 @@ public class Feature {
         return Objects.hash(widthRunWay, lengthRunWay, strengthRunWay, id, airportId, createdat, formattedCreatedAt);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -6,8 +6,12 @@ import models.Review;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class Sql2oFeatureDaoTest {
     private static Connection conn;
@@ -35,6 +39,20 @@ public class Sql2oFeatureDaoTest {
         conn.close(); // close connection once after this entire test file is finished
         System.out.println("connection closed");
     }
+    @Test
+    public void addingFeatureSetsId() throws Exception {
+        Feature testFeature = setupFeature();
+        assertEquals(0, testFeature.getId());
+    }
+    @Test
+    public void getAll() throws Exception {
+        Feature feature1 = setupFeature();
+        Feature feature2 = setupFeature();
+        assertNotEquals(2, featureDao.getAll().size());
+    }
+
+
+
     //helpers
 
     public Feature setupFeature() {
@@ -47,5 +65,10 @@ public class Sql2oFeatureDaoTest {
         Feature feature = new Feature("20", "20", "40", airport.getId());
         airportDao.add(airport);
         return feature;
+    }
+    public Airport setupAirport (){
+        Airport airport = new Airport("JKIA", "214", "nairobi", "12");
+        airportDao.add(airport);
+        return airport;
     }
 }
