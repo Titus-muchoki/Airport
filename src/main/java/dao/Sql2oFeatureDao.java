@@ -51,7 +51,10 @@ public class Sql2oFeatureDao implements FeatureDao {
 
     @Override
     public List<Feature> getAllFeaturesByAirportSortedNewestToOldest(int airportId) {
-        return null;
+        List<Feature> unsortedFeatures = getAllFeaturesByAirport(airportId); //calling other method!
+        List<Feature> sortedFeatures = unsortedFeatures;
+
+        return sortedFeatures;
     }
 
     @Override
