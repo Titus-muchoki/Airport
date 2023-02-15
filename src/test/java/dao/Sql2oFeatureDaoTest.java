@@ -50,6 +50,15 @@ public class Sql2oFeatureDaoTest {
         Feature feature2 = setupFeature();
         assertNotEquals(2, featureDao.getAll().size());
     }
+    @Test
+    public void getAllFeaturesByAirport() throws Exception {
+        Airport testAirport = setupAirport();
+        Airport otherAirport = setupAirport(); //add in some extra data to see if it interferes
+        Feature feature1 = setupFeatureForAirport(testAirport);
+        Feature feature2 = setupFeatureForAirport(testAirport);
+        Feature featureForOtherAirport = setupFeatureForAirport(otherAirport);
+        assertNotEquals(2, featureDao.getAllFeaturesByAirport(testAirport.getId()).size());
+    }
 
 
 
