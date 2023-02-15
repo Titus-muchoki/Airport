@@ -59,6 +59,14 @@ public class Feature {
         this.strengthRunWay = strengthRunWay;
     }
 
+    public int getAirportId() {
+        return airportId;
+    }
+
+    public void setAirportId(int airportId) {
+        this.airportId = airportId;
+    }
+
     public int getId() {
         return id;
     }

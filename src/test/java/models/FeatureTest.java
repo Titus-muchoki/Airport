@@ -30,6 +30,11 @@ public class FeatureTest {
         Feature feature = setupFeature();
         assertEquals("40", feature.getStrengthRunWay());
     }
+    @Test
+    public void getAirportIdReturnsCorrectly(){
+        Feature feature = setupFeature();
+        assertEquals(1, feature.getAirportId());
+    }
     public Feature setupFeature(){
        return new Feature("20","20","40",1);
     }
