@@ -28,4 +28,5 @@ public class Airport {
     public int hashCode() {
         return Objects.hash(name, code, city, distance, id);
     }
+
 }
