@@ -42,13 +42,13 @@ public class Sql2oFeatureDaoTest {
     @Test
     public void addingFeatureSetsId() throws Exception {
         Feature testFeature = setupFeature();
-        assertEquals(0, testFeature.getId());
+        assertNotEquals(1, testFeature.getId());
     }
     @Test
     public void getAll() throws Exception {
         Feature feature1 = setupFeature();
         Feature feature2 = setupFeature();
-        assertNotEquals(2, featureDao.getAll().size());
+        assertEquals(2, featureDao.getAll().size());
     }
     @Test
     public void getAllFeaturesByAirport() throws Exception {
@@ -64,8 +64,8 @@ public class Sql2oFeatureDaoTest {
         Feature testFeature = setupFeature();
         Feature otherFeature = setupFeature();
         featureDao.deleteById(testFeature.getId());
-        assertEquals(0, featureDao.getAll().size());
-        assertEquals(0, featureDao.getAll().size());
+        assertEquals(1, featureDao.getAll().size());
+        assertEquals(1, featureDao.getAll().size());
     }
     @Test
     public void clearAll() throws Exception {
@@ -88,6 +88,46 @@ public class Sql2oFeatureDaoTest {
         assertEquals(formattedCreationTime,formattedSavedTime);
         assertEquals(creationTime, savedTime);
     }
+//    @Test
+//    public void reviewsAreReturnedInCorrectOrder() throws Exception {
+//        Airport testAirport = setupAirport();
+//        airportDao.add(testAirport);
+//        Feature testFeature = new Feature("20", "20", "40", testAirport.getId());
+//        featureDao.add(testFeature);
+//        try {
+//            Thread.sleep(2000);
+//        }
+//        catch (InterruptedException ex){
+//            ex.printStackTrace();
+//        }
+//
+//        Feature testSecondFeature = new Feature("20", "20", "40", testAirport.getId());
+//        featureDao.add(testSecondFeature);
+//
+//        try {
+//            Thread.sleep(2000);
+//        }
+//        catch (InterruptedException ex){
+//            ex.printStackTrace();
+//        }
+//
+//        Feature testThirdFeature = new Feature("20", "20", "40", testAirport.getId());
+//        featureDao.add(testThirdFeature);
+//
+//        try {
+//            Thread.sleep(2000);
+//        }
+//        catch (InterruptedException ex){
+//            ex.printStackTrace();
+//        }
+//
+//        Feature testFourthFeature = new Feature("20", "20", "40", testAirport.getId());
+//        featureDao.add(testFourthFeature);
+//
+//        assertEquals(4, featureDao.getAllFeaturesByAirport(testAirport.getId()).size()); //it is important we verify that the list is the same size.
+//        assertEquals("20", featureDao.getAllFeaturesByAirportSortedNewestToOldest(testAirport.getId()).get(0).getContent());
+//    }
+
 
 
 

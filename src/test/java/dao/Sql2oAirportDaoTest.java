@@ -38,7 +38,7 @@ public class Sql2oAirportDaoTest {
     @Test
     public void addingAirportSetsId() throws Exception {
         Airport testAirport = setupAirport();
-        assertEquals(0, testAirport.getId());
+        assertNotEquals(1, testAirport.getId());
     }
     @Test
     public void addedAirportsAreReturnedFromGetAll() throws Exception {

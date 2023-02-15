@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Feature {
+
     private String widthRunWay;
     private String lengthRunWay;
     private String strengthRunWay;
@@ -97,6 +98,7 @@ public class Feature {
         this.formattedCreatedAt = sdf.format(date);
         System.out.println(this.formattedCreatedAt);
     }
+
 //    @Override
 //    public int compareTo(Feature featureObject) {
 //        if (this.createdat < featureObject.createdat)
