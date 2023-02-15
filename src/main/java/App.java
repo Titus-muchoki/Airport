@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import dao.Sql2oAirportDao;
 import exceptions.ApiException;
+import models.Airport;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -19,7 +20,19 @@ public class App {
         String connectionString = "jdbc:postgresql://localhost:5432/aircraft"; //connect to aircraft, not jadle_test!
         Sql2o sql2o = new Sql2o(connectionString, "kajela", "8444");
 
+        airportDao = new Sql2oAirportDao(sql2o);
         conn = sql2o.open();
+
+        //CREATE
+        post("/airports/new", "application/json", (req, res) -> {
+            if (req.body().isEmpty()){
+                return gson.toJson("error:payload cannot be null");
+            }
+            Airport airport = gson.fromJson(req.body(), Airport.class);
+            airportDao.add(airport);
+            res.status(201);;
+            return gson.toJson(airport);
+        });
 
 
         //FILTERS
