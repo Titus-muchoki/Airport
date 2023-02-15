@@ -20,6 +20,16 @@ public class FeatureTest {
         Feature feature = setupFeature();
         assertEquals("20", feature.getWidthRunWay());
     }
+    @Test
+    public void getLengthRunWayReturnsCorrectly(){
+        Feature feature = setupFeature();
+        assertEquals("20", feature.getLengthRunWay());
+    }
+    @Test
+    public void getStrengthRunWayReturnsCorrectly(){
+        Feature feature = setupFeature();
+        assertEquals("40", feature.getStrengthRunWay());
+    }
     public Feature setupFeature(){
        return new Feature("20","20","40",1);
     }

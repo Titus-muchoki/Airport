@@ -43,6 +43,22 @@ public class Feature {
         this.widthRunWay = widthRunWay;
     }
 
+    public String getLengthRunWay() {
+        return lengthRunWay;
+    }
+
+    public void setLengthRunWay(String lengthRunWay) {
+        this.lengthRunWay = lengthRunWay;
+    }
+
+    public String getStrengthRunWay() {
+        return strengthRunWay;
+    }
+
+    public void setStrengthRunWay(String strengthRunWay) {
+        this.strengthRunWay = strengthRunWay;
+    }
+
     public int getId() {
         return id;
     }
