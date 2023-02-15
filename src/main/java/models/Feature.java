@@ -35,6 +35,14 @@ public class Feature {
         return Objects.hash(widthRunWay, lengthRunWay, strengthRunWay, id, airportId, createdat, formattedCreatedAt);
     }
 
+    public String getWidthRunWay() {
+        return widthRunWay;
+    }
+
+    public void setWidthRunWay(String widthRunWay) {
+        this.widthRunWay = widthRunWay;
+    }
+
     public int getId() {
         return id;
     }
