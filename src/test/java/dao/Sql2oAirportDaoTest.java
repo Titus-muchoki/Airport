@@ -9,6 +9,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class Sql2oAirportDaoTest {
     private static Connection conn;
@@ -47,6 +48,30 @@ public class Sql2oAirportDaoTest {
     @Test
     public void noAirportsReturnsEmptyList() throws Exception {
         assertEquals(0, airportDao.getAll().size());
+    }
+    @Test
+    public void findByIdReturnsCorrectAirport() throws Exception {
+        Airport testAirport = setupAirport();
+        Airport otherAirport = setupAirport();
+        assertEquals(testAirport, airportDao.findById(testAirport.getId()));
+        assertEquals(otherAirport, airportDao.findById(otherAirport.getId()));
+    }
+    @Test
+    public void updateCorrectlyUpdatesAllFields() throws Exception {
+        Airport airport = setupAirport();
+        airportDao.update(airport.getId(), "JKIA", "214", "nairobi", "12");
+        Airport airport1 = airportDao.findById(airport.getId());
+        assertEquals("JKIA", airport1.getName());
+        assertEquals("214", airport1.getCode());
+        assertEquals("nairobi", airport1.getCity());
+        assertEquals("12", airport1.getDistance());
+    }
+    @Test
+    public void deleteByIdDeletesCorrectAirport() throws Exception {
+        Airport testAirport = setupAirport();
+        Airport otherAirport = setupAirport();
+        airportDao.deleteById(testAirport.getId());
+        assertEquals(1, airportDao.getAll().size());
     }
 
     //HELPER METHODS

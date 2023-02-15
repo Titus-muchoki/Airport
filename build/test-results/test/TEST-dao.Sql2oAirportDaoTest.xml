@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dao.Sql2oAirportDaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-15T08:16:24" hostname="kajela-HP-EliteBook-840-G3" time="0.521">
+<testsuite name="dao.Sql2oAirportDaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-15T08:28:35" hostname="kajela-HP-EliteBook-840-G3" time="0.575">
   <properties/>
-  <testcase name="noAirportsReturnsEmptyList" classname="dao.Sql2oAirportDaoTest" time="0.521"/>
+  <testcase name="deleteByIdDeletesCorrectAirport" classname="dao.Sql2oAirportDaoTest" time="0.575"/>
   <system-out><![CDATA[clearing database
 connection closed
 ]]></system-out>
