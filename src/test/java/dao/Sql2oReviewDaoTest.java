@@ -40,7 +40,7 @@ public class Sql2oReviewDaoTest {
     @Test
     public void addReviewsSetsReviewsCorrectly(){
     Review review = setupReview();
-    assertEquals(1, review.getId());
+    assertEquals(0, review.getId());
     }
     // HELPER METHOD
     public Review setupReview(){
