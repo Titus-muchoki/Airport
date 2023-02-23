@@ -10,6 +10,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class Sql2oReviewDaoTest {
     private static Connection conn;
@@ -42,6 +43,14 @@ public class Sql2oReviewDaoTest {
     Review review = setupReview();
     assertEquals(0, review.getId());
     }
+    @Test
+    public void getAll() throws Exception{
+        Review review = setupReview();
+        Review review1 = setupReview();
+        assertNotEquals(2, reviewDao.getAll().size());
+    }
+    @Test
+
     // HELPER METHOD
     public Review setupReview(){
         return new Review("tito","23","844","software","IT", 1);
