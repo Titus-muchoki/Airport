@@ -38,7 +38,11 @@ public class Sql2oReviewDao implements ReviewDao {
 
     @Override
     public List<Review> getAllReviewsByAirport(int airportId) {
-        return null;
+        try(Connection con = sql2o.open()) {
+           return con.createQuery("SELECT * FROM reviews WHERE airportId = :airportId")
+                   .addParameter("airportId", airportId)
+                   .executeAndFetch(Review.class);
+        }
     }
 
     @Override

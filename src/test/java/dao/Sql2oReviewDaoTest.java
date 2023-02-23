@@ -50,7 +50,15 @@ public class Sql2oReviewDaoTest {
         assertNotEquals(2, reviewDao.getAll().size());
     }
     @Test
+    public void getAllReviewsByAirportId() throws Exception{
+        Airport testAirport = setupAirport();
+        Airport otherAirport = setupAirport();
+        Review testReview = setupReviewForAirport(testAirport);
+        Review review1 = setupReviewForAirport(testAirport);
+        Review reviewForOtherAirport = setupReviewForAirport(otherAirport);
+        assertEquals(0, reviewDao.getAllReviewsByAirport(testReview.getId()).size());
 
+    }
     // HELPER METHOD
     public Review setupReview(){
         return new Review("tito","23","844","software","IT", 1);
