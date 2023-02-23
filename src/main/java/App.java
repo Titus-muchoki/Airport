@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import dao.Sql2oAirportDao;
 import dao.Sql2oFeatureDao;
+import dao.Sql2oReviewDao;
 import exceptions.ApiException;
 import models.Airport;
 import models.Feature;
@@ -19,6 +20,7 @@ public class App {
         staticFileLocation("/public");
         Sql2oAirportDao airportDao;
         Sql2oFeatureDao featureDao;
+        Sql2oReviewDao reviewDao;
         Connection conn;
         Gson gson = new Gson();
 
@@ -26,6 +28,7 @@ public class App {
         Sql2o sql2o = new Sql2o(connectionString, "kajela", "8444");
         featureDao = new Sql2oFeatureDao(sql2o);
         airportDao = new Sql2oAirportDao(sql2o);
+        reviewDao = new Sql2oReviewDao(sql2o);
         conn = sql2o.open();
 
         //CREATE
@@ -106,6 +109,53 @@ public class App {
             featureDao.add(feature);
             res.status(201);
             return gson.toJson(feature);
+        });
+        //CREATE
+        post("/reviews/new", "application/json", (req, res) -> {
+            if (req.body().isEmpty()){
+                return gson.toJson("error:payload cannot be null");
+            }
+            Review review = gson.fromJson(req.body(), Review.class);
+            reviewDao.add(review);
+            res.status(201);;
+            return gson.toJson(review);
+        });
+        //READ
+        get("/reviews", "application/json", (req, res) -> {
+            System.out.println(reviewDao.getAll());
+
+            if (reviewDao.getAll().size() > 0){
+                return gson.toJson(reviewDao.getAll());
+            }
+            else {
+                return "{\"message\":\"I'm sorry, but no airports are currently listed in the database.\"}";
+            }
+        });
+
+
+        get("/airports/:id/reviews", "application/json", (req, res) -> {
+            int airportId = Integer.parseInt(req.params("id"));
+
+            Airport airportToFind = airportDao.findById(airportId);
+            List<Review> allReviews;
+
+            if (airportToFind == null){
+                throw new Exception("No airport by that Id");
+            }
+
+            allReviews = reviewDao.getAllReviewsByAirport(airportId);
+
+            return gson.toJson(allReviews);
+        });
+        post("/airports/:airportId/reviews/new", "application/json", (req, res) ->{
+            int airportId = Integer.parseInt(req.params("airportId"));
+            Review review = gson.fromJson(req.body(), Review.class);
+//            feature.setCreatedat(); //I am new!
+//            feature.setFormattedCreatedAt();
+            review.setAirportId(airportId);
+            reviewDao.add(review);
+            res.status(201);
+            return gson.toJson(review);
         });
 
 
