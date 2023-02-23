@@ -25,6 +25,21 @@ public class ReviewTest {
         Review review = setupReview();
         assertEquals("23", review.getInspectorCode());
     }
+    @Test
+    public void getCompetenceAreaReturnsCorrectly(){
+        Review review = setupReview();
+        assertEquals("844", review.getCompetenceArea());
+    }
+    @Test
+    public void getTrainingUndertakenReturnsCorrectly(){
+        Review review = setupReview();
+        assertEquals("software", review.getTrainingUndertaken());
+    }
+    @Test
+    public void getScheduledTrainingReturnsCorrectly(){
+        Review review = setupReview();
+        assertEquals("IT", review.getScheduledTraining());
+    }
     // HELPER METHOD
     public Review setupReview(){
         return new Review("tito","23","844","software","IT", 1);

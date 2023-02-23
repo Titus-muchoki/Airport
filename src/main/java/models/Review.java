@@ -49,4 +49,28 @@ public class Review {
     public void setInspectorCode(String inspectorCode) {
         this.inspectorCode = inspectorCode;
     }
+
+    public String getCompetenceArea() {
+        return competenceArea;
+    }
+
+    public void setCompetenceArea(String competenceArea) {
+        this.competenceArea = competenceArea;
+    }
+
+    public String getTrainingUndertaken() {
+        return trainingUndertaken;
+    }
+
+    public void setTrainingUndertaken(String trainingUndertaken) {
+        this.trainingUndertaken = trainingUndertaken;
+    }
+
+    public String getScheduledTraining() {
+        return scheduledTraining;
+    }
+
+    public void setScheduledTraining(String scheduledTraining) {
+        this.scheduledTraining = scheduledTraining;
+    }
 }
