@@ -1,7 +1,9 @@
 package dao;
 
 import models.Review;
+import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
 import java.util.List;
 
@@ -14,7 +16,16 @@ public class Sql2oReviewDao implements ReviewDao {
 
     @Override
     public void add(Review review) {
-
+        String sql = "INSERT INTO reviews (inspectorname,inspectorcode,competencearea,trainingundertaken,scheduledtraining,airportid)VALUES(:inspectorName, :inspectorCode, :competenceArea, :trainingUndertaken, :scheduledTraining, :airportId)";
+        try(Connection con = sql2o.open()) {
+            int id = (int) con.createQuery(sql, true)
+                    .bind(review)
+                    .executeUpdate()
+                    .getKey();
+            review.setId(id);
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
     }
 
     @Override

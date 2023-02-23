@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import static org.junit.Assert.assertEquals;
+
 public class Sql2oReviewDaoTest {
     private static Connection conn;
 
@@ -37,7 +39,8 @@ public class Sql2oReviewDaoTest {
     }
     @Test
     public void addReviewsSetsReviewsCorrectly(){
-
+    Review review = setupReview();
+    assertEquals(1, review.getId());
     }
     // HELPER METHOD
     public Review setupReview(){
