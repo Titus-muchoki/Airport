@@ -59,6 +59,15 @@ public class Sql2oReviewDaoTest {
         assertEquals(0, reviewDao.getAllReviewsByAirport(testReview.getId()).size());
 
     }
+    @Test
+    public void deleteById() throws Exception{
+        Review testReview = setupReview();
+        Review otherReview = setupReview();
+        reviewDao.deleteById(testReview.getId());
+        assertEquals(0, reviewDao.getAll().size());
+        assertEquals(0, reviewDao.getAll().size());
+
+    }
     // HELPER METHOD
     public Review setupReview(){
         return new Review("tito","23","844","software","IT", 1);
