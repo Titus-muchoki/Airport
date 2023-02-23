@@ -68,6 +68,13 @@ public class Sql2oReviewDaoTest {
         assertEquals(0, reviewDao.getAll().size());
 
     }
+    @Test
+    public void clearAll() throws Exception{
+        Review testReview = setupReview();
+        Review otherReview = setupReview();
+        reviewDao.clearAll();
+        assertEquals(0, reviewDao.getAll().size());
+    }
     // HELPER METHOD
     public Review setupReview(){
         return new Review("tito","23","844","software","IT", 1);
