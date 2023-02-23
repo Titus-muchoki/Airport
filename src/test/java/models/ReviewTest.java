@@ -40,6 +40,11 @@ public class ReviewTest {
         Review review = setupReview();
         assertEquals("IT", review.getScheduledTraining());
     }
+    @Test
+    public void getAirportIdReturnsCorrectly(){
+        Review review = setupReview();
+        assertEquals(1, review.getAirportId());
+    }
     // HELPER METHOD
     public Review setupReview(){
         return new Review("tito","23","844","software","IT", 1);

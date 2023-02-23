@@ -73,4 +73,20 @@ public class Review {
     public void setScheduledTraining(String scheduledTraining) {
         this.scheduledTraining = scheduledTraining;
     }
+
+    public int getAirportId() {
+        return airportId;
+    }
+
+    public void setAirportId(int airportId) {
+        this.airportId = airportId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
