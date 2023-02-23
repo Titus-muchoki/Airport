@@ -41,4 +41,12 @@ public class Review {
     public void setInspectorName(String inspectorName) {
         this.inspectorName = inspectorName;
     }
+
+    public String getInspectorCode() {
+        return inspectorCode;
+    }
+
+    public void setInspectorCode(String inspectorCode) {
+        this.inspectorCode = inspectorCode;
+    }
 }

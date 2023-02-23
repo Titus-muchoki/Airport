@@ -20,6 +20,11 @@ public class ReviewTest {
         Review review = setupReview();
         assertEquals("tito", review.getInspectorName());
     }
+    @Test
+    public void getInspectorCodeReturnsCorrectly(){
+        Review review = setupReview();
+        assertEquals("23", review.getInspectorCode());
+    }
     // HELPER METHOD
     public Review setupReview(){
         return new Review("tito","23","844","software","IT", 1);
