@@ -46,7 +46,7 @@ public class App {
                 return gson.toJson(airportDao.getAll());
             }
             else {
-                return "{\"message\":\"I'm sorry, but no restaurants are currently listed in the database.\"}";
+                return "{\"message\":\"I'm sorry, but no airports are currently listed in the database.\"}";
             }
         });
 
@@ -54,7 +54,7 @@ public class App {
             int airportId = Integer.parseInt(req.params("id"));
             Airport airportToFind = airportDao.findById(airportId);
             if (airportToFind == null){
-                throw new ApiException(404, String.format("No restaurant with the id: \"%s\" exists", req.params("id")));
+                throw new ApiException(404, String.format("No airport with the id: \"%s\" exists", req.params("id")));
             }
             return gson.toJson(airportId);
         });
@@ -67,7 +67,7 @@ public class App {
             List<Feature> allFeatures;
 
             if (airportToFind == null){
-                throw new Exception("No restaurant by that Id");
+                throw new Exception("No airport by that Id");
             }
 
             allFeatures = featureDao.getAllFeaturesByAirport(airportId);
@@ -85,6 +85,18 @@ public class App {
             res.status(201);;
             return gson.toJson(feature);
         });
+        //READ
+        get("/features", "application/json", (req, res) -> {
+            System.out.println(featureDao.getAll());
+
+            if (featureDao.getAll().size() > 0){
+                return gson.toJson(featureDao.getAll());
+            }
+            else {
+                return "{\"message\":\"I'm sorry, but no airports are currently listed in the database.\"}";
+            }
+        });
+
         post("/airports/:airportId/features/new", "application/json", (req, res) ->{
             int airportId = Integer.parseInt(req.params("airportId"));
             Feature feature = gson.fromJson(req.body(), Feature.class);
