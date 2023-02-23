@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReviewDao {
     //create
-    void add(Feature feature);
+    void add(Review review);
 
     //read
     List<Review> getAll();

@@ -33,4 +33,12 @@ public class Review {
     public int hashCode() {
         return Objects.hash(inspectorName, inspectorCode, competenceArea, trainingUndertaken, scheduledTraining, airportId, id);
     }
+
+    public String getInspectorName() {
+        return inspectorName;
+    }
+
+    public void setInspectorName(String inspectorName) {
+        this.inspectorName = inspectorName;
+    }
 }
