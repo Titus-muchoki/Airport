@@ -2,7 +2,9 @@ package dao;
 
 import models.Activity;
 import models.Review;
+import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
 import java.util.List;
 
@@ -14,7 +16,18 @@ public class Sql2oActivityDao implements ActivityDao{
 
     @Override
     public void add(Activity activity) {
-        String sql = "INSERT INTO activities()VALUES()";
+        String sql = "INSERT INTO activities(inspectiondate, inspectionarea, inspectionoutcome,serviceabilitystatus,airportid)VALUES(:inspectionDate, :inspectionArea, :inspectionOutcome, :serviceAbilityStatus, :airportId)";
+        try(Connection con = sql2o.open()) {
+            int id = (int) con.createQuery(sql, true)
+                    .bind(activity)
+                    .executeUpdate()
+                    .getKey();
+            activity.setId(id);
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+
+
+        }
 
     }
 

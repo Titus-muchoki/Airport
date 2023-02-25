@@ -1,10 +1,16 @@
 package dao;
 
+import models.Activity;
+import models.Airport;
+import models.Feature;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+
+import static org.junit.Assert.assertNotEquals;
 
 public class Sql2oActivityDaoTest {
     private static Connection conn;
@@ -24,12 +30,34 @@ public class Sql2oActivityDaoTest {
     @After
     public void tearDown() throws Exception {
         System.out.println("clearing database");
-        featureDao.clearAll(); //clear all restaurants after every test
+        activityDao.clearAll(); //clear all restaurants after every test
         airportDao.clearAll(); //clear all restaurants after every test
     }
     @AfterClass //changed to @AfterClass (run once after all tests in this file completed)
     public static void shutDown() throws Exception{ //changed to static
         conn.close(); // close connection once after this entire test file is finished
         System.out.println("connection closed");
+    }
+    @Test
+    public void addingActivitySetsId() throws Exception {
+        Activity testActivity = setupActivities();
+        assertNotEquals(1, testActivity.getId());
+    }
+
+
+
+    // HELPER METHOD
+    public Activity setupActivities(){
+        return new Activity("12/3/23","court","standard","good",1);
+    }
+    public Activity setupActivityForAirport(Airport airport) throws Exception{
+        Activity activity = new Activity("12/3/23","court","standard","good", airport.getId());
+        airportDao.add(airport);
+        return activity;
+    }
+    public Airport setupAirport (){
+        Airport airport = new Airport("JKIA", "214", "nairobi", "12");
+        airportDao.add(airport);
+        return airport;
     }
 }
