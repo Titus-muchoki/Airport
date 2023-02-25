@@ -65,6 +65,12 @@ public class ActivityTest {
         activities.setServiceAbilityStatus("medium");
         assertEquals("medium", activities.getServiceAbilityStatus());
        }
+       @Test
+       public void setAirportIdSetsAirportId() throws Exception{
+        Activities activities = setupActivities();
+        activities.setAirportId(2);
+        assertEquals(2, activities.getAirportId());
+       }
 
        // HELPER METHOD
     public Activities setupActivities(){
