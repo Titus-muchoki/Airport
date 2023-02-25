@@ -41,6 +41,13 @@ public class ActivityTest {
         Activities activities = setupActivities();
         assertEquals(1, activities.getAirportId());
        }
+       @Test
+       public void setInspectionDateSetsCorrectly() throws  Exception{
+        Activities activities = setupActivities();
+        activities.setInspectionDate("28/02/2023");
+        assertEquals("28/02/2023", activities.getInspectionDate());
+
+       }
 
        // HELPER METHOD
     public Activities setupActivities(){
