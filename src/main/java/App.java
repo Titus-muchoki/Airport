@@ -1,8 +1,10 @@
 import com.google.gson.Gson;
+import dao.Sql2oActivityDao;
 import dao.Sql2oAirportDao;
 import dao.Sql2oFeatureDao;
 import dao.Sql2oReviewDao;
 import exceptions.ApiException;
+import models.Activity;
 import models.Airport;
 import models.Feature;
 import models.Review;
@@ -21,6 +23,7 @@ public class App {
         Sql2oAirportDao airportDao;
         Sql2oFeatureDao featureDao;
         Sql2oReviewDao reviewDao;
+        Sql2oActivityDao activityDao;
         Connection conn;
         Gson gson = new Gson();
 
@@ -29,6 +32,7 @@ public class App {
         featureDao = new Sql2oFeatureDao(sql2o);
         airportDao = new Sql2oAirportDao(sql2o);
         reviewDao = new Sql2oReviewDao(sql2o);
+        activityDao = new Sql2oActivityDao(sql2o);
         conn = sql2o.open();
 
         //CREATE
@@ -153,6 +157,51 @@ public class App {
             reviewDao.add(review);
             res.status(201);
             return gson.toJson(review);
+        });
+        //CREATE
+        post("/activities/new", "application/json", (req, res) -> {
+            if (req.body().isEmpty()){
+                return gson.toJson("error:payload cannot be null");
+            }
+            Activity activity = gson.fromJson(req.body(), Activity.class);
+            activityDao.add(activity);
+            res.status(201);;
+            return gson.toJson(activity);
+        });
+        //READ
+        get("/activities", "application/json", (req, res) -> {
+            System.out.println(activityDao.getAll());
+
+            if (activityDao.getAll().size() > 0){
+                return gson.toJson(activityDao.getAll());
+            }
+            else {
+                return "{\"message\":\"I'm sorry, but no activities are currently listed in the database.\"}";
+            }
+        });
+
+
+        get("/airports/:id/activities", "application/json", (req, res) -> {
+            int airportId = Integer.parseInt(req.params("id"));
+
+            Airport airportToFind = airportDao.findById(airportId);
+            List<Activity> allActivities;
+
+            if (airportToFind == null){
+                throw new Exception("No airport by that Id");
+            }
+
+            allActivities = activityDao.getAllActivitiesByAirport(airportId);
+
+            return gson.toJson(allActivities);
+        });
+        post("/airports/:airportId/activities/new", "application/json", (req, res) ->{
+            int airportId = Integer.parseInt(req.params("airportId"));
+            Activity activity = gson.fromJson(req.body(), Activity.class);
+            activity.setAirportId(airportId);
+            activityDao.add(activity);
+            res.status(201);
+            return gson.toJson(activity);
         });
 //        delete("/airports/:airportId/reviews/:reviewid/delete", "application/json", (req, res) ->{
 //            int airportId = Integer.parseInt(req.params("airportId"));
