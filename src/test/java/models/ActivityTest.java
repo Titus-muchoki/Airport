@@ -59,6 +59,12 @@ public class ActivityTest {
         activities.setInspectionOutcome("quit good");
         assertEquals("quit good", activities.getInspectionOutcome());
        }
+       @Test
+       public void setServiceAbilityStatusSetsCorrectly() throws  Exception{
+        Activities activities = setupActivities();
+        activities.setServiceAbilityStatus("medium");
+        assertEquals("medium", activities.getServiceAbilityStatus());
+       }
 
        // HELPER METHOD
     public Activities setupActivities(){
