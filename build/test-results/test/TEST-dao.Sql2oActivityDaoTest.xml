@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dao.Sql2oActivityDaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-25T11:07:43" hostname="kajela-HP-EliteBook-840-G3" time="0.647">
+<testsuite name="dao.Sql2oActivityDaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-25T11:24:07" hostname="kajela-HP-EliteBook-840-G3" time="0.563">
   <properties/>
-  <testcase name="getAllActivitiesByAirport" classname="dao.Sql2oActivityDaoTest" time="0.647"/>
+  <testcase name="clearAll" classname="dao.Sql2oActivityDaoTest" time="0.563"/>
   <system-out><![CDATA[clearing database
 connection closed
 ]]></system-out>

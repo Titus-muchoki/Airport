@@ -59,6 +59,21 @@ public class Sql2oActivityDaoTest {
         Activity activityForOtherAirport = setupActivityForAirport(otherAirport);
         assertNotEquals(2, activityDao.getAllActivitiesByAirport(testAirport.getId()).size());
     }
+    @Test
+    public void deleteById() throws Exception{
+        Activity testActivity = setupActivities();
+        Activity otherActivity = setupActivities();
+        activityDao.deleteById(testActivity.getId());
+        assertEquals(1,activityDao.getAll().size());
+        assertEquals(1,activityDao.getAll().size());
+    }
+    @Test
+    public void clearAll()throws Exception{
+        Activity activity = setupActivities();
+        Activity activity1 = setupActivities();
+        activityDao.clearAll();
+        assertEquals(0, activityDao.getAll().size());
+    }
 
 
 

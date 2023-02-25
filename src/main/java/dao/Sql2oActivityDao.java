@@ -45,14 +45,26 @@ public class Sql2oActivityDao implements ActivityDao{
                     .executeAndFetch(Activity.class);
         }
     }
-
     @Override
     public void deleteById(int id) {
-
+        String sql = "DELETE from activities WHERE id = :id";
+        try (Connection con = sql2o.open()){
+            con.createQuery(sql, true)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        }catch (Sql2oException ex){
+            System.out.println(ex);
+        }
     }
 
     @Override
     public void clearAll() {
-
+    String sql = "DELETE from activities";
+    try(Connection con = sql2o.open()){
+        con.createQuery(sql, true)
+                .executeUpdate();
+    }catch (Sql2oException ex){
+        System.out.println(ex);
+    }
     }
 }
