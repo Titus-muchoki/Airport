@@ -46,7 +46,12 @@ public class ActivityTest {
         Activities activities = setupActivities();
         activities.setInspectionDate("28/02/2023");
         assertEquals("28/02/2023", activities.getInspectionDate());
-
+       }
+       @Test
+       public void setInspectionAreaSetCorrectly() throws Exception{
+        Activities activities = setupActivities();
+        activities.setInspectionArea("gate c");
+        assertEquals("gate c", activities.getInspectionArea());
        }
 
        // HELPER METHOD
