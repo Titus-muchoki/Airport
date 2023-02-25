@@ -36,6 +36,11 @@ public class ActivityTest {
         Activities activities = setupActivities();
         assertEquals("good", activities.getServiceAbilityStatus());
        }
+       @Test
+       public void getAirportIdReturnsCorrectly() throws Exception{
+        Activities activities = setupActivities();
+        assertEquals(1, activities.getAirportId());
+       }
 
        // HELPER METHOD
     public Activities setupActivities(){

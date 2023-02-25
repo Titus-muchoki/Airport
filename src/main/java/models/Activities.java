@@ -62,4 +62,20 @@ public class Activities {
     public void setServiceAbilityStatus(String serviceAbilityStatus) {
         this.serviceAbilityStatus = serviceAbilityStatus;
     }
+
+    public int getAirportId() {
+        return airportId;
+    }
+
+    public void setAirportId(int airportId) {
+        this.airportId = airportId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
