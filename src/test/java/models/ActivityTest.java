@@ -18,62 +18,62 @@ public class ActivityTest {
        }
        @Test
        public void getInspectionDateReturnsCorrectly() throws Exception{
-            Activities activities = setupActivities();
-            assertNotEquals(0, activities.getInspectionDate());
+            Activity activity = setupActivities();
+            assertNotEquals(0, activity.getInspectionDate());
        }
        @Test
        public void getInspectionAreaReturnsCorrectly() throws Exception{
-        Activities activities = setupActivities();
-        assertEquals("court", activities.getInspectionArea());
+        Activity activity = setupActivities();
+        assertEquals("court", activity.getInspectionArea());
        }
        @Test
        public void getInspectionOutcomeReturnsCorrectly() throws Exception{
-        Activities activities = setupActivities();
-        assertEquals("standard", activities.getInspectionOutcome());
+        Activity activity = setupActivities();
+        assertEquals("standard", activity.getInspectionOutcome());
        }
        @Test
        public void getServiceAbilityStatusReturnsCorrectly() throws Exception{
-        Activities activities = setupActivities();
-        assertEquals("good", activities.getServiceAbilityStatus());
+        Activity activity = setupActivities();
+        assertEquals("good", activity.getServiceAbilityStatus());
        }
        @Test
        public void getAirportIdReturnsCorrectly() throws Exception{
-        Activities activities = setupActivities();
-        assertEquals(1, activities.getAirportId());
+        Activity activity = setupActivities();
+        assertEquals(1, activity.getAirportId());
        }
        @Test
        public void setInspectionDateSetsCorrectly() throws  Exception{
-        Activities activities = setupActivities();
-        activities.setInspectionDate("28/02/2023");
-        assertEquals("28/02/2023", activities.getInspectionDate());
+        Activity activity = setupActivities();
+        activity.setInspectionDate("28/02/2023");
+        assertEquals("28/02/2023", activity.getInspectionDate());
        }
        @Test
        public void setInspectionAreaSetCorrectly() throws Exception{
-        Activities activities = setupActivities();
-        activities.setInspectionArea("gate c");
-        assertEquals("gate c", activities.getInspectionArea());
+        Activity activity = setupActivities();
+        activity.setInspectionArea("gate c");
+        assertEquals("gate c", activity.getInspectionArea());
        }
        @Test
        public void setInspectionOutcomeSetsCorrectly() throws Exception{
-        Activities activities = setupActivities();
-        activities.setInspectionOutcome("quit good");
-        assertEquals("quit good", activities.getInspectionOutcome());
+        Activity activity = setupActivities();
+        activity.setInspectionOutcome("quit good");
+        assertEquals("quit good", activity.getInspectionOutcome());
        }
        @Test
        public void setServiceAbilityStatusSetsCorrectly() throws  Exception{
-        Activities activities = setupActivities();
-        activities.setServiceAbilityStatus("medium");
-        assertEquals("medium", activities.getServiceAbilityStatus());
+        Activity activity = setupActivities();
+        activity.setServiceAbilityStatus("medium");
+        assertEquals("medium", activity.getServiceAbilityStatus());
        }
        @Test
        public void setAirportIdSetsAirportId() throws Exception{
-        Activities activities = setupActivities();
-        activities.setAirportId(2);
-        assertEquals(2, activities.getAirportId());
+        Activity activity = setupActivities();
+        activity.setAirportId(2);
+        assertEquals(2, activity.getAirportId());
        }
 
        // HELPER METHOD
-    public Activities setupActivities(){
-        return new  Activities("12/3/23","court","standard","good",1);
+    public Activity setupActivities(){
+        return new Activity("12/3/23","court","standard","good",1);
     }
 }

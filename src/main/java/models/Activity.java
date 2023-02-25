@@ -2,7 +2,7 @@ package models;
 
 import java.util.Objects;
 
-public class Activities {
+public class Activity {
     private String inspectionDate;
     private String inspectionArea;
     private String inspectionOutcome;
@@ -10,7 +10,7 @@ public class Activities {
     private int id;
     private int airportId;
 
-    public Activities(String inspectionDate, String inspectionArea, String inspectionOutcome, String serviceAbilityStatus, int airportId) {
+    public Activity(String inspectionDate, String inspectionArea, String inspectionOutcome, String serviceAbilityStatus, int airportId) {
         this.inspectionDate = inspectionDate;
         this.inspectionArea = inspectionArea;
         this.inspectionOutcome = inspectionOutcome;
@@ -21,8 +21,8 @@ public class Activities {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Activities)) return false;
-        Activities that = (Activities) o;
+        if (!(o instanceof Activity)) return false;
+        Activity that = (Activity) o;
         return id == that.id && airportId == that.airportId && Objects.equals(inspectionDate, that.inspectionDate) && Objects.equals(inspectionArea, that.inspectionArea) && Objects.equals(inspectionOutcome, that.inspectionOutcome) && Objects.equals(serviceAbilityStatus, that.serviceAbilityStatus);
     }
 

@@ -1,16 +1,16 @@
 package dao;
 
-import models.Activities;
+import models.Activity;
 import models.Review;
 
 import java.util.List;
 
 public interface ActivityDao {
     //create
-    void add(Activities activities);
+    void add(Activity activity);
 
     //read
-    List<Activities> getAll();
+    List<Activity> getAll();
     List<Review> getAllActivitiesByAirport(int airportId);
 
     //update
