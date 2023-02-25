@@ -53,6 +53,12 @@ public class ActivityTest {
         activities.setInspectionArea("gate c");
         assertEquals("gate c", activities.getInspectionArea());
        }
+       @Test
+       public void setInspectionOutcomeSetsCorrectly() throws Exception{
+        Activities activities = setupActivities();
+        activities.setInspectionOutcome("quit good");
+        assertEquals("quit good", activities.getInspectionOutcome());
+       }
 
        // HELPER METHOD
     public Activities setupActivities(){
