@@ -62,7 +62,6 @@ public class App {
             return gson.toJson(airportId);
         });
 
-
         get("/airports/:id/features", "application/json", (req, res) -> {
             int airportId = Integer.parseInt(req.params("id"));
 
@@ -150,14 +149,19 @@ public class App {
         post("/airports/:airportId/reviews/new", "application/json", (req, res) ->{
             int airportId = Integer.parseInt(req.params("airportId"));
             Review review = gson.fromJson(req.body(), Review.class);
-//            feature.setCreatedat(); //I am new!
-//            feature.setFormattedCreatedAt();
             review.setAirportId(airportId);
             reviewDao.add(review);
             res.status(201);
             return gson.toJson(review);
         });
-
+//        delete("/airports/:airportId/reviews/:reviewid/delete", "application/json", (req, res) ->{
+//            int airportId = Integer.parseInt(req.params("airportId"));
+//            Review review = gson.fromJson(req.body(), Review.class);
+//            review.setAirportId(airportId);
+//            reviewDao.add(review);
+//            res.status(201);
+//            return gson.toJson(review);
+//        });
 
         //FILTERS
 
