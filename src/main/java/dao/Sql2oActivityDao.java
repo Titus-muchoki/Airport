@@ -1,7 +1,6 @@
 package dao;
 
 import models.Activity;
-import models.Review;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -39,8 +38,12 @@ public class Sql2oActivityDao implements ActivityDao{
         }
     }
     @Override
-    public List<Review> getAllActivitiesByAirport(int airportId) {
-        return null;
+    public List<Activity> getAllActivitiesByAirport(int airportId) {
+        try(Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM  activities WHERE airportId = :airportId")
+                    .addParameter("airportId", airportId)
+                    .executeAndFetch(Activity.class);
+        }
     }
 
     @Override

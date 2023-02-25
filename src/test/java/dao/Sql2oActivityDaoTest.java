@@ -50,6 +50,15 @@ public class Sql2oActivityDaoTest {
         Activity activity1 = setupActivities();
         assertEquals(0, airportDao.getAll().size());
     }
+    @Test
+    public void getAllActivitiesByAirport() throws Exception {
+        Airport testAirport = setupAirport();
+        Airport otherAirport = setupAirport(); //add in some extra data to see if it interferes
+        Activity activity = setupActivityForAirport(testAirport);
+        Activity activity1 = setupActivityForAirport(testAirport);
+        Activity activityForOtherAirport = setupActivityForAirport(otherAirport);
+        assertNotEquals(2, activityDao.getAllActivitiesByAirport(testAirport.getId()).size());
+    }
 
 
 
