@@ -33,7 +33,10 @@ public class Sql2oActivityDao implements ActivityDao{
 
     @Override
     public List<Activity> getAll() {
-        return null;
+        try(Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM activities")
+                    .executeAndFetch(Activity.class);
+        }
     }
     @Override
     public List<Review> getAllActivitiesByAirport(int airportId) {

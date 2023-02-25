@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class Sql2oActivityDaoTest {
@@ -42,6 +43,12 @@ public class Sql2oActivityDaoTest {
     public void addingActivitySetsId() throws Exception {
         Activity testActivity = setupActivities();
         assertNotEquals(1, testActivity.getId());
+    }
+    @Test
+    public void getAll() throws Exception {
+        Activity activity = setupActivities();
+        Activity activity1 = setupActivities();
+        assertEquals(0, airportDao.getAll().size());
     }
 
 

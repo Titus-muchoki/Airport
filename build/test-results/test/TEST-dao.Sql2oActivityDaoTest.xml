@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dao.Sql2oActivityDaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-25T09:24:54" hostname="kajela-HP-EliteBook-840-G3" time="0.54">
+<testsuite name="dao.Sql2oActivityDaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-25T09:31:34" hostname="kajela-HP-EliteBook-840-G3" time="0.707">
   <properties/>
-  <testcase name="addingActivitySetsId" classname="dao.Sql2oActivityDaoTest" time="0.54"/>
+  <testcase name="getAll" classname="dao.Sql2oActivityDaoTest" time="0.707"/>
   <system-out><![CDATA[clearing database
 connection closed
 ]]></system-out>
