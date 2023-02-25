@@ -30,4 +30,36 @@ public class Activities {
     public int hashCode() {
         return Objects.hash(inspectionDate, inspectionArea, inspectionOutcome, serviceAbilityStatus, id, airportId);
     }
+
+    public String getInspectionDate() {
+        return inspectionDate;
+    }
+
+    public void setInspectionDate(String inspectionDate) {
+        this.inspectionDate = inspectionDate;
+    }
+
+    public String getInspectionArea() {
+        return inspectionArea;
+    }
+
+    public void setInspectionArea(String inspectionArea) {
+        this.inspectionArea = inspectionArea;
+    }
+
+    public String getInspectionOutcome() {
+        return inspectionOutcome;
+    }
+
+    public void setInspectionOutcome(String inspectionOutcome) {
+        this.inspectionOutcome = inspectionOutcome;
+    }
+
+    public String getServiceAbilityStatus() {
+        return serviceAbilityStatus;
+    }
+
+    public void setServiceAbilityStatus(String serviceAbilityStatus) {
+        this.serviceAbilityStatus = serviceAbilityStatus;
+    }
 }
