@@ -1,0 +1,41 @@
+{{#partial "content"}}
+    {{#if editActivity}}
+        <h1>Edit this activity!</h1>
+        <form action="/features/{{feature.airportId}}" method="post">
+            <br>
+            <label for="widthRunWay">Edit this airport widthRunWay</label>
+            <input id="widthRunWay" name="widthRunWay" type="text" value="{{feature.widthRunWay}}">
+            <br>
+            <label for="lengthRunWay">Edit this airport lengthRunWay</label>
+            <input id="lengthRunWay" name="lengthRunWay" type="text" value="{{feature.lengthRunWay}}">
+            <br>
+            <label for="strengthRunWay">Edit this airport strengthRunWay</label>
+            <input id="strengthRunWay" name="strengthRunWay" type="text" value="{{feature.strengthRunWay}}">
+            <br>
+            <br>
+            <label for="airportId">Edit this airport airportId</label>
+            <input id="airportId" name="airportId" type="text" value="{{feature.airportId}}">
+            <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+    {{else}}
+        <h1>Add a new Feature!</h1>
+        <form action="/features" method="post">
+
+            <label for="widthRunWay">airport widthRunWay</label>
+            <input id="widthRunWay" name="widthRunWay" type="text">
+            <br>
+            <label for="lengthRunWay">airport lengthRunWay</label>
+            <input id="lengthRunWay" name="lengthRunWay" type="text">
+            <br>
+            <label for="strengthRunWay">airport strengthRunWay</label>
+            <input id="strengthRunWay" name="strengthRunWay" type="text">
+            <br>
+            <label for="airportId">airport airportId</label>
+            <input id="airportId" name="airportId" type="text">
+            <br>
+            <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

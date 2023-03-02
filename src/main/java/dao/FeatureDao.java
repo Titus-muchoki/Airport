@@ -1,7 +1,8 @@
 package dao;
 
+import models.Airport;
 import models.Feature;
-import models.Review;
+
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ public interface FeatureDao {
 
     //read
     List<Feature> getAll();
-    List<Feature> getAllFeaturesByAirport(int airportId);
-    List<Feature> getAllFeaturesByAirportSortedNewestToOldest(int airportId);
+    List<Feature> getAllFeaturesByAirports(int airportId);
+//    List<Airport> getAllFeaturesByAirportSortedNewestToOldest(int featureId);
 
 
     //update

@@ -1,0 +1,16 @@
+{{#partial "content"}}
+    <h1>{{ activity. inspectionDate}}{{activity. inspectionArea}}{{activity. inspectionOutcome}}{{activity. serviceAbilityStatus}}{{activity.airportId}}</h1>
+    <p>Here are all the airports listed with their activity:</p>
+    <ul>
+        {{#each airports}}
+            <li>
+                <p><a href="/activities/{{activity.airportId}}/airports/{{id}}">{{name}}{{code}} {{city}}{{distance}}{{activityId}}</a></p>
+            </li>
+        {{/each}}
+    </ul>
+    <button>    <a href="/activities/{{activity.airportId}}/edit">Edit this activity</a><br>
+    </button>
+    <a href="/activities/{{activity.airportId}}/delete">DELETE this activity</a>
+{{/partial}}
+
+{{> layout.hbs}}

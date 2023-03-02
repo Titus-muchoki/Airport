@@ -1,0 +1,19 @@
+{{#partial "content"}}
+    <h1>{{ feature.widthRunWay}}{{feature.lengthRunWay}}{{feature.strengthRunWay}}{{feature.airportId}}</h1>
+    <p>Here are all the airports listed with their features:</p>
+    <ul>
+        {{#each airports}}
+            <li>
+                <p><a href="/features/{{feature.airportId}}/airports/{{id}}">{{name}}{{code}} {{city}}{{distance}}{{featureId}}</a></p>
+            </li>
+            <li>
+
+            </li>
+        {{/each}}
+    </ul>
+    <button>    <a href="/features/{{feature.airportId}}/edit">Edit this feature</a><br>
+    </button>
+    <a href="/features/{{feature.airportId}}/delete">DELETE this feature</a>
+{{/partial}}
+
+{{> layout.hbs}}

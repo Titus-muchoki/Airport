@@ -1,0 +1,47 @@
+{{#partial "content"}}
+    {{#if editActivity}}
+        <h1>Edit this activity!</h1>
+        <form action="/activities/{{activity.airportId}}" method="post">
+            <br>
+            <label for="inspectionDate">Edit this airport inspectionDate</label>
+            <input id="inspectionDate" name="inspectionDate" type="text" value="{{activity.inspectionDate}}">
+            <br>
+            <label for="inspectionArea">Edit this airport inspectionArea</label>
+            <input id="inspectionArea" name="inspectionArea" type="text" value="{{activity.inspectionArea}}">
+            <br>
+            <label for="inspectionOutcome">Edit this airport inspectionOutcome</label>
+            <input id="inspectionOutcome" name="inspectionOutcome" type="text" value="{{activity.inspectionOutcome}}">
+            <br>
+            <label for="serviceAbilityStatus">Edit this airport serviceAbilityStatus</label>
+            <input id="serviceAbilityStatus" name="serviceAbilityStatus" type="text" value="{{activity.serviceAbilityStatus}}">
+            <br>
+            <label for="airportId">Edit this airport airportId</label>
+            <input id="airportId" name="airportId" type="text" value="{{activity.airportId}}">
+
+            <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+    {{else}}
+        <h1>Add a new Activity!</h1>
+        <form action="/activities" method="post">
+
+           <label for="inspectionDate">airport inspectionDate</label>
+            <input id="inspectionDate" name="inspectionDate" type="text">
+            <br>
+            <label for="inspectionArea">airport inspectionArea</label>
+            <input id="inspectionArea" name="inspectionArea" type="text">
+            <br>
+            <label for="inspectionOutcome">airport inspectionOutcome</label>
+            <input id="inspectionOutcome" name="inspectionOutcome" type="text">
+            <br>
+            <label for="serviceAbilityStatus">airport serviceAbilityStatus</label>
+            <input id="serviceAbilityStatus" name="serviceAbilityStatus" type="text">
+            <br>
+            <label for="airportId">airport airportId</label>
+            <input id="airportId" name="airportId" type="text">
+
+            <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

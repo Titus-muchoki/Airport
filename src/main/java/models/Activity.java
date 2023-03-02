@@ -7,8 +7,9 @@ public class Activity {
     private String inspectionArea;
     private String inspectionOutcome;
     private String serviceAbilityStatus;
-    private int id;
     private int airportId;
+    private int id;
+
 
     public Activity(String inspectionDate, String inspectionArea, String inspectionOutcome, String serviceAbilityStatus, int airportId) {
         this.inspectionDate = inspectionDate;
@@ -16,19 +17,20 @@ public class Activity {
         this.inspectionOutcome = inspectionOutcome;
         this.serviceAbilityStatus = serviceAbilityStatus;
         this.airportId = airportId;
+
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Activity)) return false;
-        Activity that = (Activity) o;
-        return id == that.id && airportId == that.airportId && Objects.equals(inspectionDate, that.inspectionDate) && Objects.equals(inspectionArea, that.inspectionArea) && Objects.equals(inspectionOutcome, that.inspectionOutcome) && Objects.equals(serviceAbilityStatus, that.serviceAbilityStatus);
+        Activity activity = (Activity) o;
+        return airportId == activity.airportId && id == activity.id && Objects.equals(inspectionDate, activity.inspectionDate) && Objects.equals(inspectionArea, activity.inspectionArea) && Objects.equals(inspectionOutcome, activity.inspectionOutcome) && Objects.equals(serviceAbilityStatus, activity.serviceAbilityStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inspectionDate, inspectionArea, inspectionOutcome, serviceAbilityStatus, id, airportId);
+        return Objects.hash(inspectionDate, inspectionArea, inspectionOutcome, serviceAbilityStatus, airportId, id);
     }
 
     public String getInspectionDate() {

@@ -59,12 +59,13 @@ public class Sql2oAirportDaoTest {
     @Test
     public void updateCorrectlyUpdatesAllFields() throws Exception {
         Airport airport = setupAirport();
-        airportDao.update(airport.getId(), "JKIA", "214", "nairobi", "12");
+        airportDao.update(airport.getId(), "JKIA", "214", "nairobi", "13");
         Airport airport1 = airportDao.findById(airport.getId());
         assertEquals("JKIA", airport1.getName());
         assertEquals("214", airport1.getCode());
         assertEquals("nairobi", airport1.getCity());
-        assertEquals("12", airport1.getDistance());
+        assertEquals("13", airport1.getDistance());
+        assertNotEquals(1, airport1.getId());
     }
     @Test
     public void deleteByIdDeletesCorrectAirport() throws Exception {

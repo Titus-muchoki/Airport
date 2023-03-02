@@ -9,6 +9,8 @@ public class Airport {
     private String distance;
     private int id;
 
+
+
     public Airport(String name, String code, String city, String distance) {
         this.name = name;
         this.code = code;

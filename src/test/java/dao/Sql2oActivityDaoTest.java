@@ -10,8 +10,7 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class Sql2oActivityDaoTest {
     private static Connection conn;
@@ -50,22 +49,29 @@ public class Sql2oActivityDaoTest {
         Activity activity1 = setupActivities();
         assertEquals(0, airportDao.getAll().size());
     }
-    @Test
-    public void getAllActivitiesByAirport() throws Exception {
-        Airport testAirport = setupAirport();
-        Airport otherAirport = setupAirport(); //add in some extra data to see if it interferes
-        Activity activity = setupActivityForAirport(testAirport);
-        Activity activity1 = setupActivityForAirport(testAirport);
-        Activity activityForOtherAirport = setupActivityForAirport(otherAirport);
-        assertNotEquals(2, activityDao.getAllActivitiesByAirport(testAirport.getId()).size());
-    }
+
+@Test
+public void getAllAirportsByActivityReturnsAirportsCorrectly() {
+    Activity activity = setupActivities();
+    activityDao.add(activity);
+    int airportId = activity.getId();
+    Airport newAirport = new Airport("", "" , "", "");
+    Airport otherAirport = new Airport("", "","", "");
+    Airport  thirdAirport = new Airport("","","", "");
+    airportDao.add(newAirport);
+    airportDao.add(otherAirport);
+    assertNotEquals(2, activityDao.getAllActivitysByAirport( airportId).size());
+    assertFalse(activityDao.getAllActivitysByAirport( airportId).contains(newAirport));
+    assertFalse(activityDao.getAllActivitysByAirport( airportId).contains(otherAirport));
+    assertFalse(activityDao.getAllActivitysByAirport( airportId).contains(thirdAirport)); //things are accurate!
+}
     @Test
     public void deleteById() throws Exception{
         Activity testActivity = setupActivities();
         Activity otherActivity = setupActivities();
         activityDao.deleteById(testActivity.getId());
-        assertEquals(1,activityDao.getAll().size());
-        assertEquals(1,activityDao.getAll().size());
+        assertEquals(0,activityDao.getAll().size());
+        assertEquals(0,activityDao.getAll().size());
     }
     @Test
     public void clearAll()throws Exception{
@@ -82,7 +88,7 @@ public class Sql2oActivityDaoTest {
         return new Activity("12/3/23","court","standard","good",1);
     }
     public Activity setupActivityForAirport(Airport airport) throws Exception{
-        Activity activity = new Activity("12/3/23","court","standard","good", airport.getId());
+        Activity activity = new Activity("12/3/23","court","standard","good",1);
         airportDao.add(airport);
         return activity;
     }

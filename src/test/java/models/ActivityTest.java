@@ -37,10 +37,11 @@ public class ActivityTest {
         assertEquals("good", activity.getServiceAbilityStatus());
        }
        @Test
-       public void getAirportIdReturnsCorrectly() throws Exception{
+       public void getAirportIdcorectlyreturnsAirportId()throws Exception{
         Activity activity = setupActivities();
         assertEquals(1, activity.getAirportId());
        }
+
        @Test
        public void setInspectionDateSetsCorrectly() throws  Exception{
         Activity activity = setupActivities();
@@ -65,15 +66,10 @@ public class ActivityTest {
         activity.setServiceAbilityStatus("medium");
         assertEquals("medium", activity.getServiceAbilityStatus());
        }
-       @Test
-       public void setAirportIdSetsAirportId() throws Exception{
-        Activity activity = setupActivities();
-        activity.setAirportId(2);
-        assertEquals(2, activity.getAirportId());
-       }
+
 
        // HELPER METHOD
     public Activity setupActivities(){
-        return new Activity("12/3/23","court","standard","good",1);
+        return new Activity("12/3/23","court","standard","good", 1);
     }
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import models.Activity;
+import models.Airport;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -15,7 +16,7 @@ public class Sql2oActivityDao implements ActivityDao{
 
     @Override
     public void add(Activity activity) {
-        String sql = "INSERT INTO activities(inspectiondate, inspectionarea, inspectionoutcome,serviceabilitystatus,airportid)VALUES(:inspectionDate, :inspectionArea, :inspectionOutcome, :serviceAbilityStatus, :airportId)";
+        String sql = "INSERT INTO activities(inspectiondate, inspectionarea, inspectionoutcome,serviceabilitystatus,airportId)VALUES(:inspectionDate, :inspectionArea, :inspectionOutcome, :serviceAbilityStatus, :airportId)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(activity)
@@ -37,14 +38,16 @@ public class Sql2oActivityDao implements ActivityDao{
                     .executeAndFetch(Activity.class);
         }
     }
+
     @Override
-    public List<Activity> getAllActivitiesByAirport(int airportId) {
+    public List<Activity> getAllActivitysByAirport(int airportId) {
         try(Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM  activities WHERE airportId = :airportId")
+            return con.createQuery("SELECT * FROM activities WHERE airportId = :airportId")
                     .addParameter("airportId", airportId)
                     .executeAndFetch(Activity.class);
         }
     }
+
     @Override
     public void deleteById(int id) {
         String sql = "DELETE from activities WHERE id = :id";

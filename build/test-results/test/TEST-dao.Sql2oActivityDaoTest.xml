@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dao.Sql2oActivityDaoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-25T11:24:07" hostname="kajela-HP-EliteBook-840-G3" time="0.563">
+<testsuite name="dao.Sql2oActivityDaoTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-02-28T18:33:23" hostname="kajela-HP-EliteBook-840-G3" time="1.641">
   <properties/>
-  <testcase name="clearAll" classname="dao.Sql2oActivityDaoTest" time="0.563"/>
+  <testcase name="getAllAirportsByActivityReturnsAirportsCorrectly" classname="dao.Sql2oActivityDaoTest" time="1.09"/>
+  <testcase name="getAll" classname="dao.Sql2oActivityDaoTest" time="0.124"/>
+  <testcase name="clearAll" classname="dao.Sql2oActivityDaoTest" time="0.149"/>
+  <testcase name="addingActivitySetsId" classname="dao.Sql2oActivityDaoTest" time="0.092"/>
+  <testcase name="deleteById" classname="dao.Sql2oActivityDaoTest" time="0.186"/>
   <system-out><![CDATA[clearing database
+clearing database
+clearing database
+clearing database
+clearing database
 connection closed
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

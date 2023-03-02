@@ -1,5 +1,6 @@
 package dao;
 
+import models.Airport;
 import models.Feature;
 import models.Review;
 import org.sql2o.Connection;
@@ -18,7 +19,7 @@ public class Sql2oFeatureDao implements FeatureDao {
 
     @Override
     public void add(Feature feature) {
-        String sql = "INSERT INTO features (widthrunway, lengthrunway, strengthrunway, airportid, createdat) VALUES (:widthRunWay, :lengthRunWay, :strengthRunWay, :airportId, :createdat)"; //if you change your model, be sure to update here as well!
+        String sql = "INSERT INTO features (widthrunway, lengthrunway, strengthrunway,airportId) VALUES (:widthRunWay, :lengthRunWay, :strengthRunWay, :airportId)"; //if you change your model, be sure to update here as well!
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(feature)
@@ -39,23 +40,22 @@ public class Sql2oFeatureDao implements FeatureDao {
         }
     }
 
-
     @Override
-    public List<Feature> getAllFeaturesByAirport(int airportId) {
-        try (Connection con = sql2o.open()) {
+    public List<Feature> getAllFeaturesByAirports(int airportId) {
+        try(Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM features WHERE airportId = :airportId")
                     .addParameter("airportId", airportId)
                     .executeAndFetch(Feature.class);
         }
     }
 
-    @Override
-    public List<Feature> getAllFeaturesByAirportSortedNewestToOldest(int airportId) {
-        List<Feature> unsortedFeatures = getAllFeaturesByAirport(airportId); //calling other method!
-        List<Feature> sortedFeatures = unsortedFeatures;
 
-        return sortedFeatures;
-    }
+//    @Override
+//    public List<Airport> getAllFeaturesByAirportSortedNewestToOldest(int featureId) {
+//        List<Airport> unsortedFeatures = getAllFeaturesByAirportSortedNewestToOldest( featureId);
+//        List<Airport> sortedFeatures = unsortedFeatures;
+//        return sortedFeatures;
+//    }
 
     @Override
     public void deleteById(int id) {

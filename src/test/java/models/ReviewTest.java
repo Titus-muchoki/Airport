@@ -41,13 +41,14 @@ public class ReviewTest {
         assertEquals("IT", review.getScheduledTraining());
     }
     @Test
-    public void getAirportIdReturnsCorrectly(){
+    public void getAirportIdReturnsCorrectly() throws  Exception{
         Review review = setupReview();
         assertEquals(1, review.getAirportId());
     }
+
     // HELPER METHOD
     public Review setupReview(){
-        return new Review("tito","23","844","software","IT", 1);
+        return new Review("tito","23","844","software","IT",1);
 
     }
 }

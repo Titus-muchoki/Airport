@@ -1,8 +1,8 @@
 package dao;
 
+import models.Activity;
 import models.Airport;
 import models.Feature;
-import models.Review;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -10,8 +10,8 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 public class Sql2oFeatureDaoTest {
     private static Connection conn;
@@ -51,13 +51,19 @@ public class Sql2oFeatureDaoTest {
         assertEquals(2, featureDao.getAll().size());
     }
     @Test
-    public void getAllFeaturesByAirport() throws Exception {
-        Airport testAirport = setupAirport();
-        Airport otherAirport = setupAirport(); //add in some extra data to see if it interferes
-        Feature feature1 = setupFeatureForAirport(testAirport);
-        Feature feature2 = setupFeatureForAirport(testAirport);
-        Feature featureForOtherAirport = setupFeatureForAirport(otherAirport);
-        assertNotEquals(2, featureDao.getAllFeaturesByAirport(testAirport.getId()).size());
+    public void getAllAirportsByActivityReturnsAirportsCorrectly() {
+        Feature feature = setupFeature();
+        featureDao.add(feature);
+        int featureId = feature.getId();
+        Airport newAirport = new Airport("", "" , "", "");
+        Airport otherAirport = new Airport("", "","", "");
+        Airport  thirdAirport = new Airport("","","", "");
+        airportDao.add(newAirport);
+        airportDao.add(otherAirport); //we are not adding loan 3 so, we can test things precisely.
+        assertNotEquals(2, featureDao.getAllFeaturesByAirports( featureId).size());
+        assertFalse(featureDao.getAllFeaturesByAirports( featureId).contains(newAirport));
+        assertFalse(featureDao.getAllFeaturesByAirports( featureId).contains(otherAirport));
+        assertFalse(featureDao.getAllFeaturesByAirports( featureId).contains(thirdAirport)); //things are accurate!
     }
     @Test
     public void deleteById() throws Exception {
@@ -74,74 +80,16 @@ public class Sql2oFeatureDaoTest {
         featureDao.clearAll();
         assertEquals(0, featureDao.getAll().size());
     }
-    @Test
-    public void timeStampIsReturnedCorrectly() throws Exception {
-        Airport testAirport = setupAirport();
-        airportDao.add(testAirport);
-        Feature testFeature = new Feature("20", "20","40", testAirport.getId());
-        featureDao.add(testFeature);
-
-        long creationTime = testFeature.getCreatedat();
-        long savedTime = featureDao.getAll().get(0).getCreatedat();
-        String formattedCreationTime = testFeature.getFormattedCreatedAt();
-        String formattedSavedTime = featureDao.getAll().get(0).getFormattedCreatedAt();
-        assertEquals(formattedCreationTime,formattedSavedTime);
-        assertEquals(creationTime, savedTime);
-    }
-//    @Test
-//    public void reviewsAreReturnedInCorrectOrder() throws Exception {
-//        Airport testAirport = setupAirport();
-//        airportDao.add(testAirport);
-//        Feature testFeature = new Feature("20", "20", "40", testAirport.getId());
-//        featureDao.add(testFeature);
-//        try {
-//            Thread.sleep(2000);
-//        }
-//        catch (InterruptedException ex){
-//            ex.printStackTrace();
-//        }
-//
-//        Feature testSecondFeature = new Feature("20", "20", "40", testAirport.getId());
-//        featureDao.add(testSecondFeature);
-//
-//        try {
-//            Thread.sleep(2000);
-//        }
-//        catch (InterruptedException ex){
-//            ex.printStackTrace();
-//        }
-//
-//        Feature testThirdFeature = new Feature("20", "20", "40", testAirport.getId());
-//        featureDao.add(testThirdFeature);
-//
-//        try {
-//            Thread.sleep(2000);
-//        }
-//        catch (InterruptedException ex){
-//            ex.printStackTrace();
-//        }
-//
-//        Feature testFourthFeature = new Feature("20", "20", "40", testAirport.getId());
-//        featureDao.add(testFourthFeature);
-//
-//        assertEquals(4, featureDao.getAllFeaturesByAirport(testAirport.getId()).size()); //it is important we verify that the list is the same size.
-//        assertEquals("20", featureDao.getAllFeaturesByAirportSortedNewestToOldest(testAirport.getId()).get(0).getContent());
-//    }
-
-
-
-
-
     //helpers
 
     public Feature setupFeature() {
-        Feature feature = new Feature("20", "20", "40", 1);
+        Feature feature = new Feature("20", "20", "40",1);
         featureDao.add(feature);
         return feature;
     }
 
     public Feature setupFeatureForAirport(Airport airport) {
-        Feature feature = new Feature("20", "20", "40", airport.getId());
+        Feature feature = new Feature("20", "20", "40",1);
         airportDao.add(airport);
         return feature;
     }

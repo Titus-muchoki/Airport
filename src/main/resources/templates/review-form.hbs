@@ -1,0 +1,52 @@
+{{#partial "content"}}
+    {{#if editReview}}
+        <h1>Edit this review!</h1>
+        <form action="/reviews/{{review.airportId}}" method="post">
+            <br>
+            <label for="inspectorName">Edit this airport inspectorName</label>
+            <input id="inspectorName" name="inspectorName" type="text" value="{{review.inspectorName}}">
+            <br>
+            <label for="inspectorCode">Edit this airport inspectorCode</label>
+            <input id="inspectorCode" name="inspectorCode" type="text" value="{{review.inspectorCode}}">
+            <br>
+            <label for="competenceArea">Edit this airport competenceArea</label>
+            <input id="competenceArea" name="competenceArea" type="text" value="{{review.competenceArea}}">
+            <br>
+            <label for="trainingUndertaken">Edit this airport trainingUndertaken</label>
+            <input id="trainingUndertaken" name="trainingUndertaken" type="text" value="{{review.trainingUndertaken}}">
+            <br>
+            <label for="scheduledTraining">Edit this airport scheduledTraining</label>
+            <input id="scheduledTraining" name="scheduledTraining" type="text" value="{{review.scheduledTraining}}">
+            <br>
+            <label for="competenceArea">Edit this airport competenceArea</label>
+            <input id="competenceArea" name="competenceArea" type="text" value="{{review.airportId}}">
+            <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+    {{else}}
+        <h1>Add a new Review!</h1>
+        <form action="/reviews" method="post">
+
+            <label for="inspectorName">airport inspectorName</label>
+            <input id="inspectorName" name="inspectorName" type="text">
+            <br>
+            <label for="inspectorCode">airport inspectorCode</label>
+            <input id="inspectorCode" name="inspectorCode" type="text">
+            <br>
+            <label for="competenceArea">airport competenceArea</label>
+            <input id="competenceArea" name="competenceArea" type="text">
+            <br>
+            <label for="trainingUndertaken">airport trainingUndertaken</label>
+            <input id="trainingUndertaken" name="trainingUndertaken" type="text">
+            <br>
+            <label for="scheduledTraining">airport scheduledTraining</label>
+            <input id="scheduledTraining" name="scheduledTraining" type="text">
+            <br>
+            <label for="airportId">airport airportId</label>
+            <input id="airportId" name="airportId" type="text">
+
+            <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

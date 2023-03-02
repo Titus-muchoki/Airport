@@ -1,0 +1,42 @@
+{{#partial "content"}}
+
+    <h1> List o' of airports available!</h1>
+
+    {{#if airports}}
+        {{#each airports }}
+            <p><a href="/airports/{{id}}">{{name}}{{code}}{{city}}{{distance}}</a></p>
+<!--            <p><a href="/features/{{feature.id}}/airports/{{id}}">{{name}}{{code}}{{city}}{{distance}}{{featureId}}</a></p>-->
+<!--            <p><a href="/reviews/{{review.airportId}}/airports/{{id}}">{{name}}{{code}}{{city}}{{distance}}</a></p>-->
+
+        {{/each}}
+    {{else}}
+        <p>No airports! Listed</p>
+    {{/if}}
+    .................................................................................................
+    {{#if reviews}}
+        {{#each reviews }}
+            <li><a href="/reviews/{{id}}">{{ inspectorName}}<br>{{inspectorCode}}<br>{{competenceArea}}<br>{{trainingUndertaken}}<br>{{scheduledTraining}}<br>{{airportId}}</a></li>
+        {{/each}}
+    {{else}}
+        <p>no reviews for airports listed</p>
+    {{/if}}
+....................................................................................................
+    {{#if features}}
+        {{#each features }}
+            <li><a href="/features/{{id}}">{{widthRunWay}}<br>{{lengthRunWay}}<br>{{strengthRunWay}}<br>{{airportId}}</a></li>
+        {{/each}}
+    {{else}}
+        <p>no features for airports listed</p>
+    {{/if}}
+    ...................................................................................................
+    {{#if activities}}
+        {{#each activities }}
+            <li><a href="/activities/{{id}}">{{inspectionDate}}<br>{{inspectionArea}}<br>{{inspectionOutcome}}<br>{{serviceAbilityStatus}}<br>{{airportId}}</a></li>
+        {{/each}}
+    {{else}}
+        <p>no activities for airports listed</p>
+    {{/if}}
+
+    {{/partial}}
+
+{{> layout.hbs}}

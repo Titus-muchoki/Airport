@@ -1,6 +1,8 @@
 package dao;
 
 import models.Activity;
+import models.Airport;
+
 import java.util.List;
 
 public interface ActivityDao {
@@ -9,7 +11,7 @@ public interface ActivityDao {
 
     //read
     List<Activity> getAll();
-    List<Activity> getAllActivitiesByAirport(int airportId);
+    List<Activity> getAllActivitysByAirport(int airportId);
 
     //update
     //omit for now

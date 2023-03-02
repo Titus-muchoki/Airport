@@ -19,7 +19,7 @@ public class AirportTest {
     @Test
     public void getNameReturnsCorrectName() throws Exception{
         Airport airport = setupAirport();
-        assertNotEquals("Joy", airport.getName());
+        assertEquals("JKIA", airport.getName());
     }
     @Test
     public void getCodeReturnsCorrectCode() throws Exception{
@@ -36,6 +36,7 @@ public class AirportTest {
         Airport airport = setupAirport();
         assertEquals("12", airport.getDistance());
     }
+
     @Test
     public void setNameSetsNameCorrectly(){
         Airport airport = setupAirport();
@@ -61,6 +62,7 @@ public class AirportTest {
         airport.setDistance("45");
         assertEquals("45", airport.getDistance());
     }
+// helper
     public Airport setupAirport (){
         return new Airport("JKIA", "214", "nairobi", "12");
     }

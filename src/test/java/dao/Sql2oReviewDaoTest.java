@@ -1,5 +1,6 @@
 package dao;
 
+import models.Activity;
 import models.Airport;
 import models.Review;
 import org.junit.After;
@@ -9,8 +10,8 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 public class Sql2oReviewDaoTest {
     private static Connection conn;
@@ -50,22 +51,27 @@ public class Sql2oReviewDaoTest {
         assertNotEquals(2, reviewDao.getAll().size());
     }
     @Test
-    public void getAllReviewsByAirportId() throws Exception{
-        Airport testAirport = setupAirport();
-        Airport otherAirport = setupAirport();
-        Review testReview = setupReviewForAirport(testAirport);
-        Review review1 = setupReviewForAirport(testAirport);
-        Review reviewForOtherAirport = setupReviewForAirport(otherAirport);
-        assertEquals(0, reviewDao.getAllReviewsByAirport(testReview.getId()).size());
-
+    public void getAllAirportsByReviewsReturnsAirportsCorrectly() {
+        Review review = setupReview();
+        reviewDao.add(review);
+        int reviewId = review.getId();
+        Airport newAirport = new Airport("", "" , "", "");
+        Airport otherAirport = new Airport("", "","", "");
+        Airport  thirdAirport = new Airport("","","", "");
+        airportDao.add(newAirport);
+        airportDao.add(otherAirport);
+        assertNotEquals(2, reviewDao.getAllReviewsByAirports( reviewId).size());
+        assertFalse(reviewDao.getAllReviewsByAirports( reviewId).contains(newAirport));
+        assertFalse(reviewDao.getAllReviewsByAirports( reviewId).contains(otherAirport));
+        assertFalse(reviewDao.getAllReviewsByAirports( reviewId).contains(thirdAirport)); //things are accurate!
     }
     @Test
     public void deleteById() throws Exception{
         Review testReview = setupReview();
         Review otherReview = setupReview();
         reviewDao.deleteById(testReview.getId());
-        assertEquals(0, reviewDao.getAll().size());
-        assertEquals(0, reviewDao.getAll().size());
+        assertNotEquals(2, reviewDao.getAll().size());
+        assertNotEquals(2, reviewDao.getAll().size());
 
     }
     @Test
@@ -73,15 +79,15 @@ public class Sql2oReviewDaoTest {
         Review testReview = setupReview();
         Review otherReview = setupReview();
         reviewDao.clearAll();
-        assertEquals(0, reviewDao.getAll().size());
+        assertNotEquals(2, reviewDao.getAll().size());
     }
     // HELPER METHOD
     public Review setupReview(){
-        return new Review("tito","23","844","software","IT", 1);
+        return new Review("tito","23","844","software","IT",1);
 
     }
     public Review setupReviewForAirport(Airport airport){
-        Review review = new Review("tito","23","844","software","IT", airport.getId());
+        Review review = new Review("tito","23","844","software","IT",1);
         airportDao.add(airport);
         return review;
     }

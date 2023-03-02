@@ -1,15 +1,14 @@
-import com.google.gson.Gson;
 import dao.Sql2oActivityDao;
 import dao.Sql2oAirportDao;
 import dao.Sql2oFeatureDao;
 import dao.Sql2oReviewDao;
-import exceptions.ApiException;
 import models.Activity;
 import models.Airport;
 import models.Feature;
 import models.Review;
-import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,215 +18,189 @@ import static spark.Spark.*;
 
 public class App {
     public static void main(String[] args) {
+
         staticFileLocation("/public");
-        Sql2oAirportDao airportDao;
-        Sql2oFeatureDao featureDao;
-        Sql2oReviewDao reviewDao;
-        Sql2oActivityDao activityDao;
-        Connection conn;
-        Gson gson = new Gson();
+        String connectionString = "jdbc:postgresql://localhost:5432/aircraft";
 
-        String connectionString = "jdbc:postgresql://localhost:5432/aircraft"; //connect to aircraft, not jadle_test!
         Sql2o sql2o = new Sql2o(connectionString, "kajela", "8444");
-        featureDao = new Sql2oFeatureDao(sql2o);
-        airportDao = new Sql2oAirportDao(sql2o);
-        reviewDao = new Sql2oReviewDao(sql2o);
-        activityDao = new Sql2oActivityDao(sql2o);
-        conn = sql2o.open();
+        Sql2oAirportDao airportDao = new Sql2oAirportDao(sql2o);
+        Sql2oActivityDao activityDao = new Sql2oActivityDao(sql2o);
+        Sql2oFeatureDao featureDao = new Sql2oFeatureDao(sql2o);
+        Sql2oReviewDao reviewDao = new Sql2oReviewDao(sql2o);
 
-        //CREATE
-        post("/airports/new", "application/json", (req, res) -> {
-            if (req.body().isEmpty()){
-                return gson.toJson("error:payload cannot be null");
-            }
-            Airport airport = gson.fromJson(req.body(), Airport.class);
-            airportDao.add(airport);
-            res.status(201);;
-            return gson.toJson(airport);
-        });
-        //READ
-        get("/airports", "application/json", (req, res) -> {
-            System.out.println(airportDao.getAll());
+        //get: show all airports with all activities and show all activities
 
-            if (airportDao.getAll().size() > 0){
-                return gson.toJson(airportDao.getAll());
-            }
-            else {
-                return "{\"message\":\"I'm sorry, but no airports are currently listed in the database.\"}";
-            }
-        });
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Activity> allActivities = activityDao.getAll();
+            model.put("activities", allActivities);
+            model = new HashMap<>();
+            List<Feature> features = featureDao.getAll();
+            model.put("features", features);
+            List<Review> reviews = reviewDao.getAll();
+            model.put("reviews", reviews);
+            List<Airport> airports = airportDao.getAll();
+            model.put("airports", airports);
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
 
-        get("/airports/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
-            int airportId = Integer.parseInt(req.params("id"));
-            Airport airportToFind = airportDao.findById(airportId);
-            if (airportToFind == null){
-                throw new ApiException(404, String.format("No airport with the id: \"%s\" exists", req.params("id")));
-            }
-            return gson.toJson(airportId);
-        });
+        //get: show a form to create a new activity
 
-        get("/airports/:id/features", "application/json", (req, res) -> {
-            int airportId = Integer.parseInt(req.params("id"));
+        get("/activities/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Activity> activities = activityDao.getAll(); //refresh list of links for navbar
+            model.put("activities", activities);
+            return new ModelAndView(model, "activity-form.hbs"); //new layout
+        }, new HandlebarsTemplateEngine());
 
-            Airport airportToFind = airportDao.findById(airportId);
-            List<Feature> allFeatures;
+        //post: process a form to create a new activity
 
-            if (airportToFind == null){
-                throw new Exception("No airport by that Id");
-            }
+        post("/activities", (req, res) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String inspectionDate = req.queryParams("inspectionDate");
+            String inspectionArea = req.queryParams("inspectionArea");
+            String inspectionOutcome = req.queryParams("inspectionOutcome");
+            String serviceAbilityStatus = req.queryParams("serviceAbilityStatus");
+            int airportId = Integer.parseInt(req.queryParams("airportId"));
+            Activity  newActivity = new Activity(inspectionDate,inspectionArea,inspectionOutcome,serviceAbilityStatus,airportId);
+            activityDao.add(newActivity);
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
 
-            allFeatures = featureDao.getAllFeaturesByAirport(airportId);
-
-            return gson.toJson(allFeatures);
-        });
-
-        //CREATE
-        post("/features/new", "application/json", (req, res) -> {
-            if (req.body().isEmpty()){
-                return gson.toJson("error:payload cannot be null");
-            }
-            Feature feature = gson.fromJson(req.body(), Feature.class);
-            featureDao.add(feature);
-            res.status(201);;
-            return gson.toJson(feature);
-        });
-        //READ
-        get("/features", "application/json", (req, res) -> {
-            System.out.println(featureDao.getAll());
-
-            if (featureDao.getAll().size() > 0){
-                return gson.toJson(featureDao.getAll());
-            }
-            else {
-                return "{\"message\":\"I'm sorry, but no airports are currently listed in the database.\"}";
-            }
-        });
-
-        post("/airports/:airportId/features/new", "application/json", (req, res) ->{
-            int airportId = Integer.parseInt(req.params("airportId"));
-            Feature feature = gson.fromJson(req.body(), Feature.class);
-            feature.setCreatedat(); //I am new!
-            feature.setFormattedCreatedAt();
-            feature.setAirportId(airportId);
-            featureDao.add(feature);
-            res.status(201);
-            return gson.toJson(feature);
-        });
-        //CREATE
-        post("/reviews/new", "application/json", (req, res) -> {
-            if (req.body().isEmpty()){
-                return gson.toJson("error:payload cannot be null");
-            }
-            Review review = gson.fromJson(req.body(), Review.class);
-            reviewDao.add(review);
-            res.status(201);;
-            return gson.toJson(review);
-        });
-        //READ
-        get("/reviews", "application/json", (req, res) -> {
-            System.out.println(reviewDao.getAll());
-
-            if (reviewDao.getAll().size() > 0){
-                return gson.toJson(reviewDao.getAll());
-            }
-            else {
-                return "{\"message\":\"I'm sorry, but no airports are currently listed in the database.\"}";
-            }
-        });
+        //get: show new booking form
+        get("/airports/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Activity> activities =  activityDao.getAll();
+            model.put("activities", activities);
+            return new ModelAndView(model, "airport-form.hbs");
+        }, new HandlebarsTemplateEngine());
 
 
-        get("/airports/:id/reviews", "application/json", (req, res) -> {
-            int airportId = Integer.parseInt(req.params("id"));
+//        //task: process new booking form
+        post("/airports", (req, res) -> { //URL to make new task on POST rout
+            Map<String, Object> model = new HashMap<>();
+            List<Activity> allActivities = activityDao.getAll();
+            model.put("activities", allActivities);
+            String name = req.queryParams("name");
+            String code = req.queryParams("code");
+            String city = req.queryParams("city");
+            String distance = req.queryParams("distance");
+            Airport newAirport = new Airport(name, code, city, distance);//See what we did with the hard coded categoryId?
+            airportDao.add(newAirport);
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
 
-            Airport airportToFind = airportDao.findById(airportId);
-            List<Review> allReviews;
+        //get: delete all activities and all airports
 
-            if (airportToFind == null){
-                throw new Exception("No airport by that Id");
-            }
+        get("/activities/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            activityDao.clearAll();
+            airportDao.clearAll();
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
 
-            allReviews = reviewDao.getAllReviewsByAirport(airportId);
+        //get: delete all airports
 
-            return gson.toJson(allReviews);
-        });
-        post("/airports/:airportId/reviews/new", "application/json", (req, res) ->{
-            int airportId = Integer.parseInt(req.params("airportId"));
-            Review review = gson.fromJson(req.body(), Review.class);
-            review.setAirportId(airportId);
-            reviewDao.add(review);
-            res.status(201);
-            return gson.toJson(review);
-        });
-        //CREATE
-        post("/activities/new", "application/json", (req, res) -> {
-            if (req.body().isEmpty()){
-                return gson.toJson("error:payload cannot be null");
-            }
-            Activity activity = gson.fromJson(req.body(), Activity.class);
-            activityDao.add(activity);
-            res.status(201);;
-            return gson.toJson(activity);
-        });
-        //READ
-        get("/activities", "application/json", (req, res) -> {
-            System.out.println(activityDao.getAll());
+        get("/airports/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            airportDao.clearAll();
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+        //get: show a form to create a new activity
 
-            if (activityDao.getAll().size() > 0){
-                return gson.toJson(activityDao.getAll());
-            }
-            else {
-                return "{\"message\":\"I'm sorry, but no activities are currently listed in the database.\"}";
-            }
-        });
+        get("/features/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Feature> features = featureDao.getAll(); //refresh list of links for navbar
+            model.put("features", features);
+            return new ModelAndView(model, "feature-form.hbs"); //new layout
+        }, new HandlebarsTemplateEngine());
+        post("/features", (req, res) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String widthRunWay = req.queryParams("widthRunWay");
+            String lengthRunWay = req.queryParams("lengthRunWay");
+            String strengthRunWay = req.queryParams("strengthRunWay");
+            int airportId = Integer.parseInt(req.queryParams("airportId"));
+            Feature  newFeature = new Feature(widthRunWay,lengthRunWay,strengthRunWay,airportId);
+            featureDao.add(newFeature);
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+        get("/reviews/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Review> reviews = reviewDao.getAll(); //refresh list of links for navbar
+            model.put("reviews", reviews);
+            return new ModelAndView(model, "review-form.hbs"); //new layout
+        }, new HandlebarsTemplateEngine());
+
+        //post: process a form to create a new activity
+
+        post("/reviews", (req, res) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String inspectorName = req.queryParams("inspectorName");
+            String inspectorCode = req.queryParams("inspectorCode");
+            String competenceArea = req.queryParams("competenceArea");
+            String trainingUndertaken = req.queryParams("trainingUndertaken");
+            String scheduledTraining = req.queryParams("scheduledTraining");
+            int airportId = Integer.parseInt(req.queryParams("airportId"));
+            Review  newReview = new Review(inspectorName,inspectorCode,competenceArea,trainingUndertaken,scheduledTraining,airportId);
+            reviewDao.add(newReview);
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+        get("/activities", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Activity> allActivities = activityDao.getAll();
+            model.put("activities", allActivities);
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/reviews", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Review> allReviews = reviewDao.getAll();
+            model.put("reviews", allReviews);
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+        get("/features", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Feature> allFeatures = featureDao.getAll();
+            model.put("features", allFeatures);
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/airports/:id/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("editAirport", true);
+            Airport airports = airportDao.findById(1);
+            model.put("airports", airports);
+            model.put("airports", airportDao.getAll()); //refresh list of links for navbar
+            return new ModelAndView(model, "airport-form.hbs");
+        }, new HandlebarsTemplateEngine());
+        //post: process a form to update a category
+
+//        post("/activities/:id", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            int idOfActivitiesToEdit = Integer.parseInt(req.params("id"));
+//            String inspectionDate = req.queryParams("inspectionDate");
+//            String inspectionArea = req.queryParams("inspectionArea");
+//            String inspectionOutcome = req.queryParams("inspectionOutcome");
+//            String serviceAbilityStatus = req.queryParams("serviceAbilityStatus");
+//            int airportId = Integer.parseInt(req.queryParams("airportId"));
+//            catego.update(idOfCategoryToEdit, newAmount);
+//            res.redirect("/");
+//            return null;
+//        }, new HandlebarsTemplateEngine());
 
 
-        get("/airports/:id/activities", "application/json", (req, res) -> {
-            int airportId = Integer.parseInt(req.params("id"));
 
-            Airport airportToFind = airportDao.findById(airportId);
-            List<Activity> allActivities;
-
-            if (airportToFind == null){
-                throw new Exception("No airport by that Id");
-            }
-
-            allActivities = activityDao.getAllActivitiesByAirport(airportId);
-
-            return gson.toJson(allActivities);
-        });
-        post("/airports/:airportId/activities/new", "application/json", (req, res) ->{
-            int airportId = Integer.parseInt(req.params("airportId"));
-            Activity activity = gson.fromJson(req.body(), Activity.class);
-            activity.setAirportId(airportId);
-            activityDao.add(activity);
-            res.status(201);
-            return gson.toJson(activity);
-        });
-//        delete("/airports/:airportId/reviews/:reviewid/delete", "application/json", (req, res) ->{
-//            int airportId = Integer.parseInt(req.params("airportId"));
-//            Review review = gson.fromJson(req.body(), Review.class);
-//            review.setAirportId(airportId);
-//            reviewDao.add(review);
-//            res.status(201);
-//            return gson.toJson(review);
-//        });
-
-        //FILTERS
-
-        exception(ApiException.class, (exception, req, res) -> {
-            ApiException err = (ApiException) exception;
-            Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("status", err.getStatusCode());
-            jsonMap.put("errorMessage", err.getMessage());
-            res.type("application/json");
-            res.status(err.getStatusCode());
-            res.body(gson.toJson(jsonMap));
-        });
-
-
-        after((req, res) ->{
-            res.type("application/json");
-        });
-
+//        get("/activities//airpor", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            airportDao.getAll();
+//            res.redirect("/");
+//            return null;
+//        }, new HandlebarsTemplateEngine());
     }
 }

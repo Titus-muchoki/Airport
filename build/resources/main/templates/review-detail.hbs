@@ -1,0 +1,16 @@
+{{#partial "content"}}
+    <h1>{{ review.inspectorName}}{{review.inspectorCode}}{{review.competenceArea}}{{review.trainingUndertaken}}{{review.scheduledTraining}}{{review.airportId}}</h1>
+    <p>Here are all the airports listed with their reviews:</p>
+    <ul>
+        {{#each airports}}
+            <li>
+                <p><a href="/reviews/{{review.airportId}}/airports/{{id}}">{{name}}{{code}} {{city}}{{distance}}{{activityId}}</a></p>
+            </li>
+        {{/each}}
+    </ul>
+    <button>    <a href="/reviews/{{review.airportId}}/edit">Edit this review</a><br>
+    </button>
+    <a href="/reviews/{{review.airportId}}/delete">DELETE this review</a>
+{{/partial}}
+
+{{> layout.hbs}}

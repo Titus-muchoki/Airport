@@ -1,6 +1,6 @@
 package dao;
 
-import models.Feature;
+import models.Airport;
 import models.Review;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public interface ReviewDao {
 
     //read
     List<Review> getAll();
-    List<Review> getAllReviewsByAirport(int airportId);
+    List<Review> getAllReviewsByAirports(int airportId);
 
     //update
     //omit for now

@@ -1,5 +1,6 @@
 package dao;
 
+import models.Airport;
 import models.Review;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -16,7 +17,7 @@ public class Sql2oReviewDao implements ReviewDao {
 
     @Override
     public void add(Review review) {
-        String sql = "INSERT INTO reviews (inspectorname,inspectorcode,competencearea,trainingundertaken,scheduledtraining,airportid)VALUES(:inspectorName, :inspectorCode, :competenceArea, :trainingUndertaken, :scheduledTraining, :airportId)";
+        String sql = "INSERT INTO reviews (inspectorname,inspectorcode,competencearea,trainingundertaken,scheduledtraining,airportId)VALUES(:inspectorName, :inspectorCode, :competenceArea, :trainingUndertaken, :scheduledTraining, :airportId)";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(review)
@@ -37,11 +38,11 @@ public class Sql2oReviewDao implements ReviewDao {
     }
 
     @Override
-    public List<Review> getAllReviewsByAirport(int airportId) {
+    public List<Review> getAllReviewsByAirports(int airportId) {
         try(Connection con = sql2o.open()) {
-           return con.createQuery("SELECT * FROM reviews WHERE airportId = :airportId")
-                   .addParameter("airportId", airportId)
-                   .executeAndFetch(Review.class);
+            return con.createQuery("SELECT * FROM reviews WHERE airportId = :airportId")
+                    .addParameter("airportId", airportId)
+                    .executeAndFetch(Review.class);
         }
     }
 

@@ -45,6 +45,7 @@ public class Sql2oAirportDao implements AirportDao{
         }
     }
 
+
     @Override
     public void update(int id, String newName, String newCode, String newCity, String newDistance) {
         String sql = "UPDATE airports SET (name, code, city, distance) = (:name, :code, :city, :distance) WHERE id=:id"; //CHECK!!!
