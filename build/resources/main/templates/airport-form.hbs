@@ -17,19 +17,19 @@
             <label for="distance">Airport distance</label>
             <input id="distance" name="distance" type="text" value="{{airport.distance}}"> <br>
 
-<!--            <label for="activityId">Airport activityId</label>-->
-<!--            <input id="activityId" name="activityId" type="text" value="{{airport.activityId}}"> <br>-->
+            <label for="activityId">Airport activityId</label>
+            <input id="activityId" name="activityId" type="text" value="{{airport.activityId}}"> <br>
 
             <label for="activityId">Update this airport activity:</label>
             <select id="activityId" name="activityId">
-                {{#each activities}}
+                  {{#each activities}}
                     <li><a href="/activities/airports/{{id}}">{{inspectionDate}}<br>
                         {{inspectionArea}}<br>
                         {{inspectionOutcome}}<br>
                         {{serviceAbilityStatus}}<br>
                         {{airportId}}
                     </a></li>
-<!--                    <option value="{{activity.airportId}}">{{inspectionDate}}<br>{{inspectionArea}}<br>{{inspectionOutcome}}<br>{{ serviceAbilityStatus}}</option>-->
+                    <option value="{{activity.airportId}}">{{inspectionDate}}<br>{{inspectionArea}}<br>{{inspectionOutcome}}<br>{{ serviceAbilityStatus}}</option>
                 {{/each}}
             </select>
             <p>Don't see the right Activity?<a href="/activities/new">Add a new activity.</a></p>
@@ -39,7 +39,7 @@
         <h1>Add a new Airport!</h1>
 
         <form action="/airports" method="post">
-            {{#if activities}}
+            {{#if airports}}
                 <label for="name"> airport name</label>
                 <input id="name" name="name" type="text" value="{{airport.name}}">
                 <br>
