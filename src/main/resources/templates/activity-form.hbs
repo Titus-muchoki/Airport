@@ -4,7 +4,7 @@
         <form action="/activities/{{activity.airportId}}" method="post">
             <br>
             <label for="inspectionDate">Edit this airport inspectionDate</label>
-            <input id="inspectionDate" name="inspectionDate" type="text" value="{{activity.inspectionDate}}">
+            <input id="inspectionDate" name="inspectionDate" type="date" value="{{activity.inspectionDate}}">
             <br>
             <label for="inspectionArea">Edit this airport inspectionArea</label>
             <input id="inspectionArea" name="inspectionArea" type="text" value="{{activity.inspectionArea}}">
@@ -25,7 +25,7 @@
         <form action="/activities" method="post">
 
            <label for="inspectionDate">airport inspectionDate</label>
-            <input id="inspectionDate" name="inspectionDate" type="text">
+            <input id="inspectionDate" name="inspectionDate" type="date">
             <br>
             <label for="inspectionArea">airport inspectionArea</label>
             <input id="inspectionArea" name="inspectionArea" type="text">

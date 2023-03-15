@@ -170,15 +170,7 @@ public class App {
             model.put("features", allFeatures);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
-//
-//        get("/airports/:id/edit", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            model.put("editAirport", true);
-//            Airport airports = airportDao.findById(1);
-//            model.put("airports", airports);
-//            model.put("airports", airportDao.getAll()); //refresh list of links for navbar
-//            return new ModelAndView(model, "airport-form.hbs");
-//        }, new HandlebarsTemplateEngine());
+
         get("/airports/:airport_id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfAirportToFind = Integer.parseInt(req.params("airport_id")); //pull id - must match route segment
@@ -202,6 +194,34 @@ public class App {
             airportDao.clearAll();
             res.redirect("/");
             return null;
+        }, new HandlebarsTemplateEngine());
+        //        //get: show an individual feature that is nested in an airport
+
+        get("/features/:feature_id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfFeatureToFind = Integer.parseInt(req.params("feature_id")); //pull id - must match route segment
+            List<Feature> foundFeature = featureDao.getAllFeaturesByAirports(idOfFeatureToFind);//use it to find task
+            model.put("feature", foundFeature); //add it to model for template to display
+            model.put("features", featureDao.getAll()); //refresh list of links for navbar
+            return new ModelAndView(model, "feature-detail.hbs"); //individual task page.
+        }, new HandlebarsTemplateEngine());
+
+        get("/activities/:activity_id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfActivityToFind = Integer.parseInt(req.params("activity_id")); //pull id - must match route segment
+            List<Activity> foundActivities = activityDao.getAllActivitysByAirport(idOfActivityToFind);//use it to find task
+            model.put("activity", foundActivities); //add it to model for template to display
+            model.put("activities", activityDao.getAll()); //refresh list of links for navbar
+            return new ModelAndView(model, "activity-detail.hbs"); //individual task page.
+        }, new HandlebarsTemplateEngine());
+
+        get("/reviews/:review_id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfReviewToFind = Integer.parseInt(req.params("review_id")); //pull id - must match route segment
+            List<Review> foundReview = reviewDao.getAllReviewsByAirports(idOfReviewToFind);//use it to find task
+            model.put("review", foundReview); //add it to model for template to display
+            model.put("reviews", reviewDao.getAll()); //refresh list of links for navbar
+            return new ModelAndView(model, "review-detail.hbs"); //individual task page.
         }, new HandlebarsTemplateEngine());
     }
 }
