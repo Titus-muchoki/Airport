@@ -170,15 +170,15 @@ public class App {
             model.put("features", allFeatures);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
-
-        get("/airports/:id/edit", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("editAirport", true);
-            Airport airports = airportDao.findById(1);
-            model.put("airports", airports);
-            model.put("airports", airportDao.getAll()); //refresh list of links for navbar
-            return new ModelAndView(model, "airport-form.hbs");
-        }, new HandlebarsTemplateEngine());
+//
+//        get("/airports/:id/edit", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            model.put("editAirport", true);
+//            Airport airports = airportDao.findById(1);
+//            model.put("airports", airports);
+//            model.put("airports", airportDao.getAll()); //refresh list of links for navbar
+//            return new ModelAndView(model, "airport-form.hbs");
+//        }, new HandlebarsTemplateEngine());
         get("/airports/:airport_id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfAirportToFind = Integer.parseInt(req.params("airport_id")); //pull id - must match route segment
@@ -188,5 +188,20 @@ public class App {
             return new ModelAndView(model, "airport-detail.hbs"); //individual task page.
         }, new HandlebarsTemplateEngine());
 
+        get("/airports/:id/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Airport   airport = airportDao.findById(Integer.parseInt(req.params("id")));
+            airportDao.getAll();
+            model.put("airport",airport);
+            model.put("editAirports", true);
+            return new ModelAndView(model, "airport-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/airports/:id/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            airportDao.clearAll();
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
     }
 }
