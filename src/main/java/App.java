@@ -18,7 +18,7 @@ import static spark.Spark.*;
 
 public class App {
     public static void main(String[] args) {
-
+        port(8090);
         staticFileLocation("/public");
         String connectionString = "jdbc:postgresql://localhost:5432/aircraft";
 
