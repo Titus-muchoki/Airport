@@ -179,28 +179,14 @@ public class App {
             model.put("airports", airportDao.getAll()); //refresh list of links for navbar
             return new ModelAndView(model, "airport-form.hbs");
         }, new HandlebarsTemplateEngine());
-        //post: process a form to update a category
+        get("/airports/:airport_id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfAirportToFind = Integer.parseInt(req.params("airport_id")); //pull id - must match route segment
+            Airport foundAirport = airportDao.findById(idOfAirportToFind); //use it to find task
+            model.put("airport", foundAirport); //add it to model for template to display
+            model.put("airports", airportDao.getAll()); //refresh list of links for navbar
+            return new ModelAndView(model, "airport-detail.hbs"); //individual task page.
+        }, new HandlebarsTemplateEngine());
 
-//        post("/activities/:id", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            int idOfActivitiesToEdit = Integer.parseInt(req.params("id"));
-//            String inspectionDate = req.queryParams("inspectionDate");
-//            String inspectionArea = req.queryParams("inspectionArea");
-//            String inspectionOutcome = req.queryParams("inspectionOutcome");
-//            String serviceAbilityStatus = req.queryParams("serviceAbilityStatus");
-//            int airportId = Integer.parseInt(req.queryParams("airportId"));
-//            catego.update(idOfCategoryToEdit, newAmount);
-//            res.redirect("/");
-//            return null;
-//        }, new HandlebarsTemplateEngine());
-
-
-
-//        get("/activities//airpor", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            airportDao.getAll();
-//            res.redirect("/");
-//            return null;
-//        }, new HandlebarsTemplateEngine());
     }
 }
