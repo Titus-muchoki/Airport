@@ -189,6 +189,18 @@ public class App {
             return new ModelAndView(model, "airport-form.hbs");
         }, new HandlebarsTemplateEngine());
 
+        post("/airports/:id", (req, res) -> { //URL to update task on POST route
+            Map<String, Object> model = new HashMap<>();
+            int airportToEditId = Integer.parseInt(req.params("id"));
+            String name = req.queryParams("name");
+            String code = req.queryParams("code");
+            String city = req.queryParams("city");
+            String distance = req.queryParams("distance");
+            airportDao.update(airportToEditId,name,code,city,distance);  // remember the hardcoded categoryId we placed? See what we've done to/with it?
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
         get("/airports/:id/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             airportDao.clearAll();
